@@ -19,25 +19,25 @@ function MainLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="flex min-h-screen bg-gray-50 overflow-x-hidden">
+    <div className="flex min-h-screen bg-surface overflow-x-hidden font-inter">
       {/* Sidebar fijo a la izquierda (retráctil) */}
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
       {/* Área de contenido desplazada a la derecha del sidebar cuando está abierto */}
       <div className={`flex flex-1 flex-col transition-all duration-300 ${isSidebarOpen ? 'lg:ml-64 ml-0' : 'ml-0'}`}>
         
-        {/* Pequeña barra superior para el botón del menú */}
-        <div className="h-16 flex items-center px-6 shrink-0 bg-transparent">
+        {/* Barra superior con estilo glassmorphism */}
+        <div className="h-16 flex items-center px-6 shrink-0 bg-surface-bright/80 backdrop-blur-sm border-b border-outline-variant/20 shadow-sm sticky top-0 z-40">
           <button 
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-            className="p-2 bg-white rounded-md shadow-sm ring-1 ring-gray-200 hover:bg-gray-50 text-gray-700 transition-colors z-40"
+            className="p-2 bg-surface-bright border border-outline-variant/30 rounded-lg shadow-sm hover:bg-primary/5 text-primary transition-all duration-200 hover:shadow-md"
             title="Alternar menú lateral"
           >
             <Menu size={20} />
           </button>
         </div>
 
-        <main className="flex-1 p-6 pt-2">
+        <main className="flex-1 p-6 pt-4">
           <Routes>
             <Route path="/dashboard"     element={<Dashboard />} />
             <Route path="/paquetes"      element={<Paquetes />} />

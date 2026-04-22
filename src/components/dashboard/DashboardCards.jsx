@@ -11,10 +11,10 @@ export default function DashboardCards({ datos, activeCard, setActiveCard }) {
   const total = paquetesAbiertos + completados + vencidos;
 
   const cards = [
-    { id: 'abiertos', titulo: 'Paquetes abiertos', valor: paquetesAbiertos, icono: Package, color: 'text-blue-600', ring: 'ring-blue-500', bg: 'bg-blue-50/50' },
-    { id: 'completados', titulo: 'Paquetes completados', valor: completados, icono: CheckCircle, color: 'text-green-600', ring: 'ring-green-500', bg: 'bg-green-50/50' },
-    { id: 'vencidos', titulo: 'Paquetes vencidos', valor: vencidos, icono: AlertTriangle, color: 'text-red-600', ring: 'ring-red-500', bg: 'bg-red-50/50' },
-    { id: 'total', titulo: 'Total de paquetes', valor: total, icono: Activity, color: 'text-purple-600', ring: 'ring-purple-500', bg: 'bg-purple-50/50' }
+    { id: 'abiertos',    titulo: 'Paquetes abiertos',    valor: paquetesAbiertos, icono: Package,       color: 'text-primary',            ring: 'ring-primary/40',          bg: 'bg-primary/6' },
+    { id: 'completados', titulo: 'Paquetes completados', valor: completados,       icono: CheckCircle,   color: 'text-[#2a7d4f]',          ring: 'ring-[#2a7d4f]/40',        bg: 'bg-[#2a7d4f]/6' },
+    { id: 'vencidos',    titulo: 'Paquetes vencidos',    valor: vencidos,          icono: AlertTriangle, color: 'text-error',               ring: 'ring-error/40',            bg: 'bg-error/6' },
+    { id: 'total',       titulo: 'Total de paquetes',    valor: total,             icono: Activity,      color: 'text-on-secondary-container', ring: 'ring-secondary/40',     bg: 'bg-secondary-container/20' },
   ];
 
   return (
@@ -32,8 +32,10 @@ export default function DashboardCards({ datos, activeCard, setActiveCard }) {
               valor={c.valor}
               icono={c.icono}
               color={c.color}
-              className={`h-full transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md ${
-                isActive ? `ring-2 ${c.ring} shadow-md ${c.bg}` : 'ring-1 ring-gray-100 hover:ring-gray-300 bg-white'
+              className={`h-full transition-all duration-200 transform hover:-translate-y-1 ${
+                isActive
+                  ? `ring-2 ${c.ring} shadow-lg ${c.bg}`
+                  : 'ring-1 ring-outline-variant/15 hover:ring-outline-variant/30 hover:shadow-md'
               }`}
             />
           </div>

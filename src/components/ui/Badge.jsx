@@ -15,11 +15,11 @@
  */
 
 const estilosPorColor = {
-  green: 'bg-green-100 text-green-800',
-  blue:  'bg-blue-100  text-blue-800',
-  red:   'bg-red-100   text-red-800',
-  amber: 'bg-amber-100 text-amber-800',
-  gray:  'bg-gray-100  text-gray-600',
+  green: 'bg-[#dcfce7] text-[#166534] ring-[#166534]/20',
+  blue:  'bg-primary/8 text-primary ring-primary/20',
+  red:   'bg-error/10 text-error ring-error/20',
+  amber: 'bg-secondary-container/30 text-on-secondary-container ring-secondary/20',
+  gray:  'bg-surface-container text-outline ring-outline-variant/30',
 };
 
 // Mapeo legacy: estado → color
@@ -38,7 +38,7 @@ export default function Badge({ estado, color, children }) {
   const texto = children ?? estado ?? '';
 
   return (
-    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${clase}`}>
+    <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ring-1 ring-inset ${clase}`}>
       {texto}
     </span>
   );

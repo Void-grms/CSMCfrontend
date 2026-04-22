@@ -13,13 +13,13 @@ const ordenActividades = [
 
 export default function DashboardProgressTable({ paquetes }) {
   const getBadgeColor = (porcentaje) => {
-    if (porcentaje >= 80) return 'bg-green-100 text-green-700 ring-green-500';
-    if (porcentaje >= 50) return 'bg-yellow-100 text-yellow-700 ring-yellow-500';
-    return 'bg-red-100 text-red-700 ring-red-500';
+    if (porcentaje >= 80) return 'bg-[#dcfce7] text-[#166534] ring-[#166534]/30';
+    if (porcentaje >= 50) return 'bg-secondary-container/30 text-on-secondary-container ring-secondary/30';
+    return 'bg-error/10 text-error ring-error/30';
   };
 
   if (!paquetes || paquetes.length === 0) {
-    return <p className="text-sm text-gray-500 p-4 text-center">No hay datos de paquetes disponibles.</p>;
+    return <p className="text-sm text-outline p-4 text-center">No hay datos de paquetes disponibles.</p>;
   }
 
   // Agrupar paquetes por actividad
@@ -71,40 +71,41 @@ export default function DashboardProgressTable({ paquetes }) {
         if (grupo.codigo === 'Otros') actividadLabel = 'Adicionales ';
 
         return (
-          <div key={grupo.codigo || gIndex} className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-            <div className="bg-slate-50 border-b border-gray-200 px-5 py-3 flex items-start sm:items-center gap-3">
+          <div key={grupo.codigo || gIndex} className="bg-surface-bright rounded-xl border border-outline-variant/20 overflow-hidden shadow-[0_2px_8px_rgba(27,94,83,0.04)]">
+            {/* Header del grupo */}
+            <div className="bg-surface-container border-b border-outline-variant/20 px-5 py-3 flex items-start sm:items-center gap-3">
               <div className="h-6 flex items-center shrink-0">
-                <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+                <div className="h-2 w-2 rounded-full bg-primary"></div>
               </div>
-              <h4 className="text-[13px] font-semibold text-slate-700 leading-snug">
+              <h4 className="text-[13px] font-semibold text-on-surface-variant leading-snug">
                 {actividadLabel}{grupo.codigo !== 'Otros' ? grupo.codigo + ' ' : ''}{grupo.nombre}
               </h4>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left text-gray-600">
-                <thead className="text-[11px] uppercase bg-white text-gray-500 border-b border-gray-200">
+              <table className="w-full text-sm text-left text-on-surface">
+                <thead className="text-[11px] uppercase bg-surface-container-low text-outline border-b border-outline-variant/20">
                   <tr>
-                    <th scope="col" className="px-4 py-3 sticky left-0 bg-white z-10 w-48 shadow-[1px_0_0_0_#e5e7eb]">
+                    <th scope="col" className="px-4 py-3 sticky left-0 bg-surface-container-low z-10 w-48 shadow-[1px_0_0_0_rgba(191,201,197,0.3)]">
                       Paquete
                     </th>
-                    <th scope="col" className="px-3 py-3 w-20 text-center border-l bg-blue-50/20">
+                    <th scope="col" className="px-3 py-3 w-20 text-center border-l border-outline-variant/15 bg-primary/5">
                       Meta
                     </th>
                     {mnames.map(m => (
-                      <th key={m} scope="col" className="px-3 py-3 text-center border-l border-gray-100">
+                      <th key={m} scope="col" className="px-3 py-3 text-center border-l border-outline-variant/10">
                         {m}
                       </th>
                     ))}
-                    <th scope="col" className="px-3 py-3 text-center border-l bg-gray-50/50 font-semibold text-gray-700">
+                    <th scope="col" className="px-3 py-3 text-center border-l border-outline-variant/15 bg-surface-container/50 font-semibold text-on-surface-variant">
                       Acumulado
                     </th>
-                    <th scope="col" className="px-3 py-3 text-center border-l border-gray-100">
+                    <th scope="col" className="px-3 py-3 text-center border-l border-outline-variant/10">
                       %
                     </th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-outline-variant/10">
                   {grupo.items.map((p, index) => {
                     const meta = p.meta || 100;
                     const numMeses = p.meses || new Array(12).fill(0);
@@ -112,25 +113,25 @@ export default function DashboardProgressTable({ paquetes }) {
                     const porcentaje = meta > 0 ? Math.round((total / meta) * 100) : 0;
 
                     return (
-                      <tr key={index} className="bg-white hover:bg-slate-50 transition-colors">
-                        <td className="px-4 py-3 font-medium text-slate-800 sticky left-0 bg-inherit shadow-[1px_0_0_0_#e5e7eb] whitespace-normal break-words min-w-[220px] max-w-[280px] text-[11px] leading-tight text-left" title={p.nombre_paquete || p.nombre || 'Paquete'}>
-                          <span className="text-gray-400 font-normal mr-1">{p.id_paquete ? p.id_paquete.replace('PF_', '') : ''}</span>
+                      <tr key={index} className="bg-surface-bright hover:bg-surface-container/40 transition-colors duration-150">
+                        <td className="px-4 py-3 font-medium text-on-surface sticky left-0 bg-inherit shadow-[1px_0_0_0_rgba(191,201,197,0.2)] whitespace-normal break-words min-w-[220px] max-w-[280px] text-[11px] leading-tight text-left" title={p.nombre_paquete || p.nombre || 'Paquete'}>
+                          <span className="text-outline font-normal mr-1">{p.id_paquete ? p.id_paquete.replace('PF_', '') : ''}</span>
                           {p.nombre_paquete || p.nombre || 'Paquete'}
                         </td>
-                        <td className="px-3 py-3 text-center border-l font-medium text-slate-700 bg-blue-50/10 text-xs">
+                        <td className="px-3 py-3 text-center border-l border-outline-variant/10 font-medium text-primary bg-primary/5 text-xs">
                           {meta}
                         </td>
                         
                         {numMeses.map((val, i) => (
-                          <td key={i} className="px-3 py-3 text-center border-l border-gray-50 text-slate-500 text-[11px]">
-                            {val === 0 ? <span className="text-gray-300">-</span> : val}
+                          <td key={i} className="px-3 py-3 text-center border-l border-outline-variant/8 text-on-surface text-[11px]">
+                            {val === 0 ? <span className="text-outline-variant">-</span> : val}
                           </td>
                         ))}
 
-                        <td className="px-3 py-3 text-center border-l font-bold text-slate-700 bg-gray-50/30 text-xs">
+                        <td className="px-3 py-3 text-center border-l border-outline-variant/10 font-bold text-on-surface bg-surface-container/30 text-xs">
                           {total}
                         </td>
-                        <td className="px-3 py-3 text-center border-l">
+                        <td className="px-3 py-3 text-center border-l border-outline-variant/10">
                           <span className={"px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wide ring-1 ring-inset inline-block min-w-[40px] " + getBadgeColor(porcentaje)}>
                             {porcentaje}%
                           </span>
