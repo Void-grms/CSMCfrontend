@@ -244,16 +244,16 @@ export default function Documentos() {
               <button
                 key={tipo.id}
                 onClick={() => setTipoSeleccionado(tipo)}
-                className="group flex flex-col items-start gap-3 rounded-xl border border-gray-200 bg-white p-5 text-left shadow-sm transition-all hover:border-blue-300 hover:shadow-md hover:-translate-y-0.5"
+                className="group flex flex-col items-start gap-3 rounded-xl glass-card border border-outline-variant/20 p-5 text-left shadow-[0_4px_16px_rgba(27,94,83,0.04)] transition-all hover:border-primary/40 hover:shadow-md hover:-translate-y-0.5"
               >
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/5 text-primary group-hover:bg-primary/10 transition-colors">
                   <Icon size={22} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-800 group-hover:text-blue-700 transition-colors">
+                  <h3 className="font-semibold text-on-surface group-hover:text-primary transition-colors">
                     {tipo.nombre}
                   </h3>
-                  <p className="mt-1 text-xs text-gray-400 leading-relaxed">{tipo.descripcion}</p>
+                  <p className="mt-1 text-xs text-outline leading-relaxed">{tipo.descripcion}</p>
                 </div>
               </button>
             );
@@ -295,7 +295,7 @@ export default function Documentos() {
         </div>
 
         {/* Card principal tipo Reporte HIS */}
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm space-y-6">
+        <div className="rounded-xl glass-card border border-outline-variant/20 shadow-[0_4px_16px_rgba(27,94,83,0.04)] p-6 space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700 mb-1">Profesional:</label>
@@ -350,26 +350,26 @@ export default function Documentos() {
 
           {consultaRealizada && datosHIS && !loadingHIS && (
             <div className="space-y-4">
-              <div className="overflow-x-auto rounded-lg border border-gray-200">
-                <table className="w-full text-left text-sm">
-                  <thead className="bg-gray-50 text-gray-600 border-b border-gray-200">
+              <div className="overflow-x-auto rounded-xl glass-card border border-outline-variant/15 shadow-[0_4px_16px_rgba(27,94,83,0.04)]">
+                <table className="min-w-full text-left text-sm">
+                  <thead className="border-b border-outline-variant/20 bg-surface-container-low text-xs font-semibold uppercase tracking-wide text-outline">
                     <tr>
-                      <th className="py-3 px-4 font-semibold">N°</th>
-                      <th className="py-3 px-4 font-semibold">Profesional</th>
-                      <th className="py-3 px-4 font-semibold text-center">ATDe</th>
-                      <th className="py-3 px-4 font-semibold text-center">ATCe</th>
-                      <th className="py-3 px-4 font-semibold text-center">ATDs</th>
-                      <th className="py-3 px-4 font-semibold text-center">ATCs</th>
+                      <th className="py-3 px-4">N°</th>
+                      <th className="py-3 px-4">Profesional</th>
+                      <th className="py-3 px-4 text-center">ATDe</th>
+                      <th className="py-3 px-4 text-center">ATCe</th>
+                      <th className="py-3 px-4 text-center">ATDs</th>
+                      <th className="py-3 px-4 text-center">ATCs</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-gray-100">
-                    <tr className="hover:bg-gray-50/50">
-                      <td className="py-3 px-4">1</td>
-                      <td className="py-3 px-4 font-medium text-gray-800">{datosHIS.nombre_profesional}</td>
-                      <td className="py-3 px-4 text-center">{datosHIS.ATDe}</td>
-                      <td className="py-3 px-4 text-center">{datosHIS.ATCe}</td>
-                      <td className="py-3 px-4 text-center">{datosHIS.ATDs}</td>
-                      <td className="py-3 px-4 text-center">{datosHIS.ATCs}</td>
+                  <tbody className="divide-y divide-outline-variant/10">
+                    <tr className="transition-colors hover:bg-primary/4">
+                      <td className="py-3 px-4 text-on-surface">1</td>
+                      <td className="py-3 px-4 font-medium text-on-surface">{datosHIS.nombre_profesional}</td>
+                      <td className="py-3 px-4 text-center text-on-surface">{datosHIS.ATDe}</td>
+                      <td className="py-3 px-4 text-center text-on-surface">{datosHIS.ATCe}</td>
+                      <td className="py-3 px-4 text-center text-on-surface">{datosHIS.ATDs}</td>
+                      <td className="py-3 px-4 text-center text-on-surface">{datosHIS.ATCs}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -420,7 +420,7 @@ export default function Documentos() {
       </div>
 
       {/* Card principal */}
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm space-y-5">
+      <div className="rounded-xl glass-card border border-outline-variant/20 shadow-[0_4px_16px_rgba(27,94,83,0.04)] p-6 space-y-5">
         {/* Paso 1: Buscar paciente */}
         <div className="space-y-2">
           <label className="block text-sm font-medium text-gray-700">

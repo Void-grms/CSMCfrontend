@@ -60,7 +60,7 @@ export default function FormReporteHISDiario({ profesionales, volver, tipoSelecc
         </div>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm space-y-6">
+      <div className="rounded-xl glass-card border border-outline-variant/20 shadow-[0_4px_16px_rgba(27,94,83,0.04)] p-6 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2">
             <label className="block text-sm font-medium text-gray-700 mb-1">Profesional:</label>
@@ -109,49 +109,49 @@ export default function FormReporteHISDiario({ profesionales, volver, tipoSelecc
 
         {consultaRealizada && datosHIS && !loading && (
           <div className="space-y-4">
-            <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-inner">
-               <table className="text-xs border-collapse w-full relative">
+            <div className="overflow-x-auto rounded-xl glass-card border border-outline-variant/15 shadow-[0_4px_16px_rgba(27,94,83,0.04)]">
+               <table className="text-xs border-collapse w-full relative text-left">
                   <thead>
-                    <tr className="bg-blue-900 text-white">
-                      <th className="px-3 py-2 text-left min-w-[200px] border-b border-blue-800 sticky left-0 z-10 bg-blue-900 shadow-[1px_0_0_#1e3a8a]">Profesional</th>
+                    <tr className="bg-surface-container text-on-surface-variant font-semibold uppercase tracking-wide">
+                      <th className="px-3 py-2 text-left min-w-[200px] border-b border-outline-variant/20 sticky left-0 z-10 bg-surface-container shadow-[1px_0_0_rgba(191,201,197,0.3)]">Profesional</th>
                       {datosHIS.gruposMeses.map((g, i) => (
                         <th
                           key={i}
                           colSpan={g.cantDias}
-                          className="px-2 py-2 text-center border-l border-b border-blue-800"
+                          className="px-2 py-2 text-center border-l border-b border-outline-variant/20"
                         >
                           {g.nombreMes}
                         </th>
                       ))}
-                      <th className="px-2 py-2 text-center border-l border-b border-blue-800 bg-blue-900/90">TOTAL</th>
+                      <th className="px-2 py-2 text-center border-l border-b border-outline-variant/20 bg-surface-container/90">TOTAL</th>
                     </tr>
-                    <tr className="bg-blue-800 text-white leading-tight">
-                      <th className="px-3 py-1 text-left border-r border-blue-700 font-medium sticky left-0 z-10 bg-blue-800 shadow-[1px_0_0_#1e3a8a]">Día</th>
+                    <tr className="bg-surface-container-low text-outline uppercase tracking-wide">
+                      <th className="px-3 py-1.5 text-left border-r border-outline-variant/15 font-medium sticky left-0 z-10 bg-surface-container-low shadow-[1px_0_0_rgba(191,201,197,0.3)]">Día</th>
                       {datosHIS.fechas31.map((f, i) => {
                         const [, , dd] = f.split('-');
                         return (
-                          <th key={i} className="px-1 py-1.5 text-center w-8 border-r border-blue-700/50">
+                          <th key={i} className="px-1 py-1.5 text-center w-8 border-r border-outline-variant/10">
                             {parseInt(dd, 10)}
                           </th>
                         );
                       })}
-                      <th className="px-2 py-1 text-center border-l border-blue-700"></th>
+                      <th className="px-2 py-1.5 text-center border-l border-outline-variant/15"></th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr className="border-b hover:bg-blue-50/50 bg-white">
-                      <td className="px-3 py-2 font-medium text-gray-800 border-r border-gray-200 sticky left-0 bg-white shadow-[1px_0_0_#e5e7eb] whitespace-nowrap">
+                  <tbody className="divide-y divide-outline-variant/10">
+                    <tr className="transition-colors hover:bg-primary/4 bg-transparent">
+                      <td className="px-3 py-2.5 font-medium text-on-surface border-r border-outline-variant/10 sticky left-0 bg-inherit shadow-[1px_0_0_rgba(191,201,197,0.2)] whitespace-nowrap">
                         {datosHIS.nombre_profesional}
                       </td>
                       {datosHIS.valoresDiarios.map((v, i) => (
                         <td
                           key={i}
-                          className={`px-1 py-2 text-center border-r border-gray-100 tabular-nums ${v > 0 ? 'font-semibold text-blue-700 bg-blue-50/30' : 'text-slate-300'}`}
+                          className={`px-1 py-2 text-center border-r border-outline-variant/10 tabular-nums ${v > 0 ? 'font-semibold text-primary bg-primary/5' : 'text-outline-variant'}`}
                         >
                           {v > 0 ? v : '—'}
                         </td>
                       ))}
-                      <td className="px-2 py-2 text-center font-bold tabular-nums text-blue-600 border-l border-gray-200 bg-blue-50/50">
+                      <td className="px-2 py-2 text-center font-bold tabular-nums text-primary border-l border-outline-variant/10 bg-surface-container/30">
                         {datosHIS.total}
                       </td>
                     </tr>
