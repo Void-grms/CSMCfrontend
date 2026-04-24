@@ -14,6 +14,10 @@ import ReporteProfesionales from './pages/ReporteProfesionales';
 import Documentos from './pages/Documentos';
 import Login from './pages/Login';
 import Home from './pages/Home';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import EmergencySupport from './pages/EmergencySupport';
+import JobOpportunities from './pages/JobOpportunities';
 
 function MainLayout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -62,6 +66,10 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/politica-privacidad" element={<PrivacyPolicy />} />
+          <Route path="/terminos-servicio" element={<TermsOfService />} />
+          <Route path="/soporte-emergencia" element={<EmergencySupport />} />
+          <Route path="/oportunidades-laborales" element={<JobOpportunities />} />
           <Route 
             path="/*" 
             element={

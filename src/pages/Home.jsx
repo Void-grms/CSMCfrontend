@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Facebook, Instagram, Mail } from 'lucide-react';
 import logoRenacer from '../assets/LogoRenacer.png';
 import renacerHome from '../assets/RenacerHome.png';
 
@@ -141,7 +142,7 @@ export default function Home() {
                             </div>
                             <div className="absolute -bottom-6 -right-6 p-6 bg-secondary-container text-on-secondary-container rounded-xl shadow-xl">
                                 <p className="text-home-h3">100%</p>
-                                <p className="text-home-label-caps">Humanizado</p>
+                                <p className="text-home-label-caps">Personalizado</p>
                             </div>
                         </div>
                         <div className="space-y-6">
@@ -184,7 +185,7 @@ export default function Home() {
                                         </div>
                                         <div>
                                             <p className="text-home-button text-primary">Dirección</p>
-                                            <p className="text-outline">Calle Cáceres N° 605 – 613 Otuzco - La Libertad/ </p>
+                                            <p className="text-outline">Calle Cáceres N° 605 – 613 Otuzco - La Libertad </p>
                                         </div>
                                     </div>
                                     <div className="flex gap-6">
@@ -193,7 +194,7 @@ export default function Home() {
                                         </div>
                                         <div>
                                             <p className="text-home-button text-primary">Horarios</p>
-                                            <p className="text-outline">Lunes - Viernes: 7:30 AM - 7:30 PM y Sábados: 8:30 AM - 1:30 PM</p>
+                                            <p className="text-outline">Lunes - Viernes: 7:30 AM - 7:30 PM y Sábados: 7:30 AM - 1:30 PM</p>
                                         </div>
                                     </div>
                                     <div className="flex gap-6">
@@ -201,7 +202,7 @@ export default function Home() {
                                             <span className="material-symbols-outlined text-error">emergency</span>
                                         </div>
                                         <div>
-                                            <p className="text-home-button text-error">Emergencias 24/7</p>
+                                            <p className="text-home-button text-error">Emergencias</p>
                                             <p className="text-outline font-bold">+51 987 473 937</p>
                                         </div>
                                     </div>
@@ -250,27 +251,47 @@ export default function Home() {
                     <div className="space-y-4">
                         <p className="font-semibold text-emerald-700">Enlaces Rápidos</p>
                         <ul className="space-y-2">
-                            <li><a className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30" href="#">Política de Privacidad</a></li>
-                            <li><a className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30" href="#">Términos de Servicio</a></li>
+                            <li><Link className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30 transition-colors" to="/politica-privacidad">Política de Privacidad</Link></li>
+                            <li><Link className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30 transition-colors" to="/terminos-servicio">Términos de Servicio</Link></li>
                         </ul>
                     </div>
                     <div className="space-y-4">
                         <p className="font-semibold text-emerald-700">Soporte</p>
                         <ul className="space-y-2">
-                            <li><a className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30" href="#">Soporte de Emergencia</a></li>
-                            <li><a className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30" href="#">Oportunidades Laborales</a></li>
+                            <li><Link className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30 transition-colors" to="/soporte-emergencia">Soporte de Emergencia</Link></li>
+                            <li><Link className="text-slate-500 hover:text-emerald-600 underline decoration-emerald-500/30 transition-colors" to="/oportunidades-laborales">Oportunidades Laborales</Link></li>
                         </ul>
                     </div>
                     <div className="space-y-4">
-                        <p className="font-semibold text-emerald-700">Social</p>
-                        <div className="flex gap-4">
-                            <div className="w-8 h-8 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-emerald-900">
-                                <span className="material-symbols-outlined text-sm">share</span>
-                            </div>
-                            <div className="w-8 h-8 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-emerald-900">
-                                <span className="material-symbols-outlined text-sm">public</span>
-                            </div>
+                        <p className="font-semibold text-emerald-700">Síguenos</p>
+                        <div className="flex gap-3">
+                            <a
+                                href="https://www.facebook.com/p/Centro-de-Salud-Mental-Comunitario-RENACER-Otuzco-100034507226064/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Facebook"
+                                className="w-9 h-9 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-[#1877F2] hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all duration-200 shadow-sm hover:shadow-md"
+                            >
+                                <Facebook size={16} strokeWidth={2} />
+                            </a>
+                            <a
+                                href="https://www.instagram.com/redsalud_otuzco/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="Instagram"
+                                className="w-9 h-9 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-[#E1306C] hover:bg-gradient-to-br hover:from-[#f09433] hover:via-[#e6683c] hover:via-30% hover:to-[#dc2743] hover:text-white hover:border-transparent transition-all duration-200 shadow-sm hover:shadow-md"
+                            >
+                                <Instagram size={16} strokeWidth={2} />
+                            </a>
+                            <a
+                                href="mailto:ccomunitariorenacer@gmail.com"
+                                title="Correo electrónico"
+                                className="w-9 h-9 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-[#EA4335] hover:bg-[#EA4335] hover:text-white hover:border-[#EA4335] transition-all duration-200 shadow-sm hover:shadow-md"
+                            >
+                                <Mail size={16} strokeWidth={2} />
+                            </a>
                         </div>
+                        <p className="text-xs text-slate-400 mt-2">ccomunitariorenacer@gmail.com</p>
                     </div>
                 </div>
                 <div className="max-w-7xl mx-auto px-8 py-6 border-t border-slate-200 text-center md:text-left">
