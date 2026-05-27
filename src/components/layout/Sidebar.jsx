@@ -8,7 +8,8 @@ import {
   LogOut,
   UserCircle,
   FileText,
-  BarChart2
+  BarChart2,
+  Settings
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import logoRenacer from '../../assets/LogoRenacer.png';
@@ -22,11 +23,19 @@ const enlaces = [
   { to: '/reportes/profesionales', label: 'Reporte del Profesional', icon: BarChart2 },
   { to: '/documentos', label: 'Documentos', icon: FileText, soloAdmin: true },
   { to: '/historial', label: 'Historial',      icon: Clock },
+  { to: '/ajustes', label: 'Ajustes', icon: Settings, soloAdmin: true },
 ];
 
 /** Sidebar fija a la izquierda — estilo oscuro profesional */
-export default function Sidebar({ isOpen }) {
+export default function Sidebar({ isOpen, setIsOpen }) {
   const { user, logout } = useAuth();
+
+  // En móvil/tablet, al navegar cierra el sidebar para no tapar el contenido.
+  const cerrarSiMovil = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024 && setIsOpen) {
+      setIsOpen(false);
+    }
+  };
 
   return (
     <aside
@@ -59,6 +68,7 @@ export default function Sidebar({ isOpen }) {
             key={to}
             to={to}
             end={to === '/dashboard'}
+            onClick={cerrarSiMovil}
             className={({ isActive }) =>
               `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium min-h-[44px] transition-all duration-200 ${
                 isActive

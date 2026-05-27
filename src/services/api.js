@@ -216,4 +216,83 @@ export const exportarReporteHISDiario = async (idPersonal, fechaInicio) => {
   saveAs(new Blob([response.data]), filename);
 };
 
+/* ──────────────────────────────────────────
+   Ajustes — Paquetes
+   ────────────────────────────────────────── */
+
+export const obtenerAjustesPaquetes = (incluirEliminados = false) =>
+  api.get('/ajustes/paquetes', { params: incluirEliminados ? { incluirEliminados: 1 } : {} })
+     .then((r) => r.data?.data ?? []);
+
+export const obtenerAjustesPaquete = (id) =>
+  api.get(`/ajustes/paquetes/${id}`).then((r) => r.data?.data);
+
+export const crearAjustesPaquete = (payload) =>
+  api.post('/ajustes/paquetes', payload).then((r) => r.data);
+
+export const editarAjustesPaquete = (id, payload) =>
+  api.put(`/ajustes/paquetes/${id}`, payload).then((r) => r.data);
+
+export const eliminarAjustesPaquete = (id) =>
+  api.delete(`/ajustes/paquetes/${id}`).then((r) => r.data);
+
+export const restaurarAjustesPaquete = (id) =>
+  api.post(`/ajustes/paquetes/${id}/restaurar`).then((r) => r.data);
+
+export const obtenerVersionesPaquete = (id) =>
+  api.get(`/ajustes/paquetes/${id}/versiones`).then((r) => r.data?.data ?? []);
+
+export const obtenerVersionPaquete = (id, version) =>
+  api.get(`/ajustes/paquetes/${id}/versiones/${version}`).then((r) => r.data?.data);
+
+/* Ajustes — Personal (profesionales: estado activo/inactivo) */
+
+export const obtenerAjustesProfesionales = (filtros = {}) =>
+  api.get('/ajustes/profesionales', { params: filtros }).then((r) => r.data?.data ?? []);
+
+export const activarProfesional = (id) =>
+  api.put(`/ajustes/profesionales/${id}/activar`).then((r) => r.data);
+
+export const desactivarProfesional = (id) =>
+  api.put(`/ajustes/profesionales/${id}/desactivar`).then((r) => r.data);
+
+/* Ajustes — Profesiones y componentes */
+
+export const obtenerAjustesProfesiones = () =>
+  api.get('/ajustes/profesiones').then((r) => r.data?.data ?? []);
+
+export const obtenerAjustesComponentes = () =>
+  api.get('/ajustes/componentes').then((r) => r.data?.data ?? []);
+
+export const obtenerProfesionesComponentes = () =>
+  api.get('/ajustes/profesiones-componentes').then((r) => r.data?.data ?? []);
+
+export const guardarProfesionesComponentes = (matriz) =>
+  api.put('/ajustes/profesiones-componentes', { matriz }).then((r) => r.data);
+
+/* Ajustes — Usuarios */
+
+export const obtenerAjustesUsuarios = () =>
+  api.get('/ajustes/usuarios').then((r) => r.data?.data ?? []);
+
+export const crearAjustesUsuario = (payload) =>
+  api.post('/ajustes/usuarios', payload).then((r) => r.data);
+
+export const editarAjustesUsuario = (id, payload) =>
+  api.put(`/ajustes/usuarios/${id}`, payload).then((r) => r.data);
+
+export const cambiarPasswordUsuario = (id, password) =>
+  api.put(`/ajustes/usuarios/${id}/password`, { password }).then((r) => r.data);
+
+export const desactivarAjustesUsuario = (id) =>
+  api.delete(`/ajustes/usuarios/${id}`).then((r) => r.data);
+
+/* Ajustes — Auditoría */
+
+export const obtenerAuditoria = (filtros = {}) =>
+  api.get('/ajustes/auditoria', { params: filtros }).then((r) => r.data?.data ?? []);
+
+export const obtenerAuditoriaDetalle = (id) =>
+  api.get(`/ajustes/auditoria/${id}`).then((r) => r.data?.data);
+
 export default api;
