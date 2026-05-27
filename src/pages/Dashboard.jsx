@@ -62,19 +62,19 @@ export default function Dashboard() {
   const paquetes = safeData.paquetes || [];
 
   return (
-    <div className="space-y-5 pb-12 animate-in fade-in duration-500">
-      
+    <div className="space-y-4 sm:space-y-5 pb-12 animate-in fade-in duration-500 max-w-full">
+
       {/* HEADER + FILTERS */}
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 glass-card p-5 rounded-xl border border-outline-variant/20 shadow-[0_10px_30px_rgba(27,94,83,0.05)]">
-        <div>
-          <h2 className="text-2xl font-bold text-primary tracking-tight font-inter">
+      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 glass-card p-4 sm:p-5 rounded-xl border border-outline-variant/20 shadow-[0_10px_30px_rgba(27,94,83,0.05)]">
+        <div className="min-w-0">
+          <h2 className="text-xl sm:text-2xl font-bold text-primary tracking-tight font-inter">
             Dashboard Interactivo
           </h2>
-          <p className="mt-1 text-sm text-outline">
+          <p className="mt-1 text-xs sm:text-sm text-outline">
             Monitoreo y seguimiento de paquetes terapéuticos
           </p>
         </div>
-        
+
         <DashboardFilters anio={anio} setAnio={setAnio} />
       </div>
 
@@ -86,37 +86,37 @@ export default function Dashboard() {
       )}
 
       {/* TARJETAS CON KPI + GRAFICOS DINÁMICOS */}
-      <div className="grid grid-cols-1 lg:grid-cols-10 gap-5 items-start">
-        
+      <div className="grid grid-cols-1 lg:grid-cols-10 gap-4 sm:gap-5 items-start">
+
         {/* CARDS (Izquierda en desktop, ocupa ~40%) */}
-        <div className="lg:col-span-4 grid">
-          <DashboardCards 
-            datos={safeData} 
-            activeCard={activeCard} 
-            setActiveCard={setActiveCard} 
+        <div className="lg:col-span-4 grid min-w-0">
+          <DashboardCards
+            datos={safeData}
+            activeCard={activeCard}
+            setActiveCard={setActiveCard}
           />
         </div>
 
         {/* GRÁFICOS (Derecha en desktop, ocupa ~60%) */}
-        <div className="lg:col-span-6 rounded-xl glass-card p-6 border border-outline-variant/20 shadow-[0_10px_30px_rgba(27,94,83,0.05)] flex flex-col min-h-[380px]">
-          <DashboardCharts 
-            datos={distribucion} 
-            activeCard={activeCard} 
+        <div className="lg:col-span-6 rounded-xl glass-card p-3 sm:p-6 border border-outline-variant/20 shadow-[0_10px_30px_rgba(27,94,83,0.05)] flex flex-col min-h-[380px] min-w-0">
+          <DashboardCharts
+            datos={distribucion}
+            activeCard={activeCard}
           />
         </div>
       </div>
 
       {/* TABLA DE AVANCE (Abajo) */}
-      <div className="rounded-xl glass-card p-6 border border-outline-variant/20 shadow-[0_10px_30px_rgba(27,94,83,0.05)]">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold text-on-surface font-inter">
+      <div className="rounded-xl glass-card p-3 sm:p-6 border border-outline-variant/20 shadow-[0_10px_30px_rgba(27,94,83,0.05)] min-w-0 overflow-hidden">
+        <div className="flex items-center justify-between gap-2 mb-4 sm:mb-6 flex-wrap">
+          <h3 className="text-base sm:text-lg font-semibold text-on-surface font-inter min-w-0">
             Avance de paquetes {anio === 'todos' ? '(Todos los años)' : `(${anio})`}
           </h3>
-          <span className="text-xs font-medium bg-primary/8 text-primary px-3 py-1 rounded-full ring-1 ring-primary/20">
+          <span className="text-xs font-medium bg-primary/8 text-primary px-3 py-1 rounded-full ring-1 ring-primary/20 shrink-0">
             Vista Detallada
           </span>
         </div>
-        
+
         <DashboardProgressTable paquetes={paquetes} />
       </div>
 
