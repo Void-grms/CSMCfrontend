@@ -49,6 +49,8 @@ function FilaEntrega({ entrega, esAdmin, onGuardada }) {
     return (
       <tr className="bg-blue-50/40 align-top">
         <td className="px-3 py-2 text-xs text-gray-600 whitespace-nowrap">{fmtFecha(entrega.fecha_atencion)}</td>
+        <td className="px-3 py-2 text-xs font-mono text-gray-700">{entrega.dx || '—'}</td>
+        <td className="px-3 py-2 text-xs text-gray-700">{entrega.num_dispensacion ?? '—'}</td>
         <td className="px-3 py-2">
           <input
             value={form.medicamento}
@@ -91,6 +93,12 @@ function FilaEntrega({ entrega, esAdmin, onGuardada }) {
   return (
     <tr className="hover:bg-gray-50 align-top">
       <td className="px-3 py-2 text-xs text-gray-700 whitespace-nowrap">{fmtFecha(entrega.fecha_atencion)}</td>
+      <td className="px-3 py-2 text-xs font-mono font-semibold text-gray-800">{entrega.dx || <span className="text-gray-300">—</span>}</td>
+      <td className="px-3 py-2">
+        {entrega.num_dispensacion != null
+          ? <span className="inline-flex items-center justify-center rounded-full bg-primary/10 text-primary px-2 py-0.5 text-xs font-bold">N° {entrega.num_dispensacion}</span>
+          : <span className="text-gray-300 text-xs">—</span>}
+      </td>
       <td className="px-3 py-2 text-xs text-gray-700">{entrega.medicamento || <span className="text-gray-300">—</span>}</td>
       <td className="px-3 py-2 text-xs text-gray-700">{entrega.cantidad || <span className="text-gray-300">—</span>}</td>
       <td className="px-3 py-2 text-xs text-gray-600">{entrega.observaciones || <span className="text-gray-300">—</span>}</td>
@@ -212,7 +220,9 @@ export default function FarmaciaPacienteDetalle() {
 
       {/* Estado de dispensación */}
       {estado ? (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
+          <Dato label="Diagnóstico (Dx)" valor={estado.dx_actual || '—'} />
+          <Dato label="N° dispensación" valor={estado.num_dispensacion_actual != null ? `N° ${estado.num_dispensacion_actual}` : '—'} />
           <Dato label="Última entrega" valor={fmtFecha(estado.ultima_dispensacion)} />
           <Dato label="Próxima esperada" valor={fmtFecha(estado.proxima_fecha)} />
           <Dato
@@ -289,6 +299,8 @@ export default function FarmaciaPacienteDetalle() {
               <thead className="bg-gray-100 text-gray-600 text-xs uppercase tracking-wide">
                 <tr>
                   <th className="px-3 py-2 text-left">Fecha</th>
+                  <th className="px-3 py-2 text-left">Dx</th>
+                  <th className="px-3 py-2 text-left">N° disp.</th>
                   <th className="px-3 py-2 text-left">Medicamento</th>
                   <th className="px-3 py-2 text-left">Cantidad</th>
                   <th className="px-3 py-2 text-left">Observaciones</th>
