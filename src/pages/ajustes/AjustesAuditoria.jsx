@@ -19,7 +19,7 @@ export default function AjustesAuditoria() {
   const cargar = async () => {
     setCargando(true);
     try {
-      const limpios = Object.fromEntries(Object.entries(filtros).filter(([_, v]) => v));
+      const limpios = Object.fromEntries(Object.entries(filtros).filter(([, v]) => v));
       const data = await obtenerAuditoria(limpios);
       setEntradas(data);
     } catch (err) {

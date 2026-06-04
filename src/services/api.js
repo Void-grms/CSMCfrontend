@@ -295,4 +295,36 @@ export const obtenerAuditoria = (filtros = {}) =>
 export const obtenerAuditoriaDetalle = (id) =>
   api.get(`/ajustes/auditoria/${id}`).then((r) => r.data?.data);
 
+/* ──────────────────────────────────────────
+   Farmacia — dispensación de medicamentos
+   ────────────────────────────────────────── */
+
+/** Conteos por estado para las tarjetas resumen del módulo */
+export const obtenerFarmaciaResumen = () =>
+  api.get('/farmacia/resumen').then((r) => r.data);
+
+/** Listado de pacientes con dispensaciones y su estado (semáforo) */
+export const obtenerFarmaciaPacientes = (filtros = {}) =>
+  api.get('/farmacia/pacientes', { params: filtros }).then((r) => r.data);
+
+/** Detalle de un paciente: datos, estado e historial de entregas */
+export const obtenerFarmaciaPaciente = (id) =>
+  api.get(`/farmacia/pacientes/${id}`).then((r) => r.data);
+
+/** Configuración global (default de intervalo, ventana de relevancia, aviso previo) */
+export const obtenerConfigFarmacia = () =>
+  api.get('/farmacia/config').then((r) => r.data);
+
+/** [admin] Actualiza la configuración global */
+export const editarConfigFarmacia = (payload) =>
+  api.put('/farmacia/config', payload).then((r) => r.data);
+
+/** [admin] Crea/actualiza el intervalo personalizado de un paciente */
+export const editarIntervaloPaciente = (id, payload) =>
+  api.put(`/farmacia/pacientes/${id}/intervalo`, payload).then((r) => r.data);
+
+/** [admin] Guarda la nota manual (medicamento/cantidad/obs) de una entrega */
+export const guardarNotaDispensacion = (idCita, idCorrelativo, payload) =>
+  api.put(`/farmacia/dispensaciones/${idCita}/${idCorrelativo}/nota`, payload).then((r) => r.data);
+
 export default api;

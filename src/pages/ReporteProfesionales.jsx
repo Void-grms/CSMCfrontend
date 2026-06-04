@@ -479,7 +479,7 @@ export default function ReporteProfesionales() {
     if (paquetesSeleccionados.length > 0) base.idPaquetes = paquetesSeleccionados.join(',');
     Object.assign(base, extras);
     return new URLSearchParams(
-      Object.entries(base).filter(([_, v]) => v !== '' && v !== undefined && v !== null)
+      Object.entries(base).filter(([, v]) => v !== '' && v !== undefined && v !== null)
     ).toString();
   }, [filtros, codigosItem, paquetesSeleccionados]);
 

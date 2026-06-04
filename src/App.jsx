@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard';
 import Paquetes from './pages/Paquetes';
 import PaqueteDetalle from './pages/PaqueteDetalle';
 import Pacientes from './pages/Pacientes';
+import Farmacia from './pages/Farmacia';
+import FarmaciaPacienteDetalle from './pages/FarmaciaPacienteDetalle';
 import Importar from './pages/Importar';
 import Historial from './pages/Historial';
 import ReporteProfesionales from './pages/ReporteProfesionales';
@@ -67,6 +69,8 @@ function MainLayout() {
             <Route path="/paquetes"      element={<Paquetes />} />
             <Route path="/paquetes/:id"  element={<PaqueteDetalle />} />
             <Route path="/pacientes"     element={<Pacientes />} />
+            <Route path="/farmacia"             element={<Farmacia />} />
+            <Route path="/farmacia/:idPaciente" element={<FarmaciaPacienteDetalle />} />
             <Route path="/importar"      element={<Importar />} />
             <Route path="/historial"     element={<Historial />} />
             <Route path="/reportes/profesionales" element={<ReporteProfesionales />} />

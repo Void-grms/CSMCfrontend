@@ -61,7 +61,6 @@ export default function AjustesPersonal() {
   const fmtFecha = (f) => f ? new Date(f).toLocaleDateString('es-PE') : '—';
 
   const cambiarEstado = async (p) => {
-    const accion = p.activo ? 'desactivar' : 'activar';
     const verbo  = p.activo ? 'dar de baja' : 'reactivar';
     if (!window.confirm(
       `¿${verbo[0].toUpperCase() + verbo.slice(1)} a ${p.nombre_completo}?\n\n` +

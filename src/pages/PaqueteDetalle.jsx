@@ -192,7 +192,7 @@ export default function PaqueteDetalle() {
                     </td>
                   </tr>
                 ) : (
-                  componentes.map((c, i) => {
+                  componentes.map((c) => {
                     const pendiente = Math.max(0, c.cantidad_minima - (c.cantidad_realizada ?? 0));
                     // Row background based on status
                     const rowBg = c.cumplido

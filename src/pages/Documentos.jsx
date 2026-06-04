@@ -157,7 +157,7 @@ export default function Documentos() {
       
       setMostrarModalDomicilio(false);
       setMensaje({ tipo: 'exito', texto: 'Domicilio guardado y actualizado.' });
-    } catch (err) {
+    } catch {
       setMensaje({ tipo: 'error', texto: 'No se pudo guardar el domicilio.' });
     } finally {
       setGuardandoDomicilio(false);
@@ -206,7 +206,7 @@ export default function Documentos() {
     try {
       const res = await obtenerReporteHIS(filtroHIS.id_personal, filtroHIS.fecha_inicio, filtroHIS.fecha_fin);
       setDatosHIS(res.datos);
-    } catch (err) {
+    } catch {
       setErrorHIS('Error al obtener el reporte.');
     } finally {
       setLoadingHIS(false);
@@ -216,7 +216,7 @@ export default function Documentos() {
   const handleExportarHIS = async () => {
     try {
       await exportarReporteHIS(filtroHIS.id_personal, filtroHIS.fecha_inicio, filtroHIS.fecha_fin);
-    } catch (err) {
+    } catch {
       setErrorHIS('Error al exportar el archivo Excel.');
     }
   };

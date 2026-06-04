@@ -39,7 +39,7 @@ export default function FormReporteHISDiario({ profesionales, volver, tipoSelecc
   const handleExportar = async () => {
     try {
       await exportarReporteHISDiario(filtro.id_personal, filtro.fecha_inicio);
-    } catch (err) {
+    } catch {
       setError('Error al exportar el archivo Excel.');
     }
   };
