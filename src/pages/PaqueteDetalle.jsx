@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo, Fragment } from 'react';
 import { useParams } from 'react-router-dom';
-import { obtenerPaquete } from '../services/api';
+import { obtenerPaquete, descargarDocumentoPaquete } from '../services/api';
 import Badge from '../components/ui/Badge';
 import {
   ArrowLeft, AlertTriangle, CheckCircle2, Clock, ChevronDown, ChevronRight,
-  User, Activity
+  User, Activity, Download, Loader2
 } from 'lucide-react';
 
 export default function PaqueteDetalle() {
@@ -23,6 +23,18 @@ export default function PaqueteDetalle() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [citasAbiertas, setCitasAbiertas] = useState({});
+  const [descargando, setDescargando] = useState(false);
+
+  const handleDescargar = async () => {
+    setDescargando(true);
+    try {
+      await descargarDocumentoPaquete(id);
+    } catch {
+      alert('No se pudo generar el documento. Inténtalo de nuevo.');
+    } finally {
+      setDescargando(false);
+    }
+  };
 
   useEffect(() => {
     obtenerPaquete(id)
@@ -94,15 +106,26 @@ export default function PaqueteDetalle() {
   return (
     <div className="space-y-6">
 
-      {/* Botón volver */}
-      <button
-        onClick={handleVolver}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
-        title="Cerrar esta pestaña / volver"
-      >
-        <ArrowLeft size={16} />
-        Volver
-      </button>
+      {/* Cabecera: volver + descargar documento */}
+      <div className="flex items-center justify-between gap-2">
+        <button
+          onClick={handleVolver}
+          className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-800 transition-colors"
+          title="Cerrar esta pestaña / volver"
+        >
+          <ArrowLeft size={16} />
+          Volver
+        </button>
+        <button
+          onClick={handleDescargar}
+          disabled={descargando}
+          className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-sm font-medium text-white shadow-sm hover:bg-primary/90 disabled:opacity-50 transition-colors"
+          title="Descargar resumen del paquete en Word (.docx)"
+        >
+          {descargando ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
+          Descargar .docx
+        </button>
+      </div>
 
       {/* ═══ LAYOUT: Datos del paciente + Tabla de componentes — lado a lado ═══ */}
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">

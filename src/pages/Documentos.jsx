@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
-import { FileText, Search, Download, Loader2, AlertTriangle, CheckCircle2, X, ChevronLeft, FileSpreadsheet } from 'lucide-react';
+import { FileText, Search, Download, Loader2, AlertTriangle, CheckCircle2, X, ChevronLeft, FileSpreadsheet, ClipboardList } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api, { buscarPacienteDocumentos, generarDocumento, actualizarDomicilioPaciente, obtenerReporteHIS, exportarReporteHIS } from '../services/api';
 import FormReporteHISDiario from './FormReporteHISDiario';
+import FormReporteAtenciones from './FormReporteAtenciones';
 
 // ── Tipos de documentos disponibles (extensible para Fase 2) ─────────────────
 const TIPOS_DOCUMENTO = [
@@ -25,6 +26,13 @@ const TIPOS_DOCUMENTO = [
     nombre: 'Reporte de Producción HIS - Diario',
     descripcion: 'Genera el reporte diario de atenciones (ATCs) en un rango de 31 días por profesional, exportable a Excel.',
     icon: FileSpreadsheet,
+    requierePaciente: false,
+  },
+  {
+    id: 'reporte-atenciones',
+    nombre: 'Reporte de Atenciones (varios usuarios)',
+    descripcion: 'Genera un .docx con el estado del paquete de varios pacientes a la vez: diagnóstico, fecha de inicio, número de atenciones y observación.',
+    icon: ClipboardList,
     requierePaciente: false,
   },
   // Fase futura:
@@ -268,12 +276,16 @@ export default function Documentos() {
   // ─────────────────────────────────────────────────────────────────────────────
   if (tipoSeleccionado.id === 'reporte-his-diario') {
     return (
-      <FormReporteHISDiario 
-        profesionales={profesionales} 
-        volver={volver} 
-        tipoSeleccionado={tipoSeleccionado} 
+      <FormReporteHISDiario
+        profesionales={profesionales}
+        volver={volver}
+        tipoSeleccionado={tipoSeleccionado}
       />
     );
+  }
+
+  if (tipoSeleccionado.id === 'reporte-atenciones') {
+    return <FormReporteAtenciones volver={volver} tipoSeleccionado={tipoSeleccionado} />;
   }
 
   if (tipoSeleccionado.id === 'reporte-his') {

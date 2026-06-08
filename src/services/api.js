@@ -61,6 +61,24 @@ export const obtenerPaquetesPaginados = (filtros = {}) =>
 export const obtenerPaquete = (id) =>
   api.get(`/paquetes/${id}`).then((r) => r.data);
 
+/** Descarga el resumen del paquete en .docx y dispara la descarga en el navegador */
+export const descargarDocumentoPaquete = async (id) => {
+  const response = await api.get(`/paquetes/${id}/documento`, { responseType: 'blob' });
+
+  const disposition = response.headers['content-disposition'] || '';
+  const match = disposition.match(/filename="?([^"]+)"?/);
+  const filename = match ? match[1] : `Paquete_${id}.docx`;
+
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+};
+
 /* ──────────────────────────────────────────
    Pacientes
    ────────────────────────────────────────── */
@@ -142,6 +160,24 @@ export const generarDocumento = async (tipo, pacienteId) => {
 /** Actualiza el domicilio del paciente */
 export const actualizarDomicilioPaciente = (id, domicilio) =>
   api.put(`/pacientes/${id}/domicilio`, { domicilio }).then((r) => r.data);
+
+/** Genera el reporte de atenciones (.docx) de varios pacientes y lo descarga */
+export const descargarReporteAtenciones = async (ids) => {
+  const response = await api.post('/documentos/reporte-atenciones', { ids }, { responseType: 'blob' });
+
+  const disposition = response.headers['content-disposition'] || '';
+  const match = disposition.match(/filename="?([^"]+)"?/);
+  const filename = match ? match[1] : 'Reporte_Atenciones.docx';
+
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+};
 
 /* ──────────────────────────────────────────
    Reporte de Producción HIS
