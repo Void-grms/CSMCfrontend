@@ -10,6 +10,7 @@ import {
 import {
   ArrowLeft, Loader2, Save, Pill, Edit3, X, Check, Pause, Play,
 } from 'lucide-react';
+import { formatearFecha } from '../utils/fecha';
 
 const ESTADO_META = {
   vencido:  { label: 'Vencido',  color: 'red' },
@@ -18,7 +19,7 @@ const ESTADO_META = {
   inactivo: { label: 'Inactivo', color: 'gray' },
 };
 
-const fmtFecha = (f) => (f ? new Date(f).toLocaleDateString('es-PE') : '—');
+const fmtFecha = formatearFecha;
 
 // ── Fila del historial con edición inline de la nota (solo admin) ─────────────
 function FilaEntrega({ entrega, esAdmin, onGuardada }) {

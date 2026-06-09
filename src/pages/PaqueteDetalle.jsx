@@ -6,6 +6,7 @@ import {
   ArrowLeft, AlertTriangle, CheckCircle2, Clock, ChevronDown, ChevronRight,
   User, Activity, Download, Loader2
 } from 'lucide-react';
+import { formatearFecha } from '../utils/fecha';
 
 export default function PaqueteDetalle() {
   const { id } = useParams();
@@ -153,8 +154,8 @@ export default function PaqueteDetalle() {
               {paciente?.historia_clinica && (
                 <div><span className="text-gray-400">Hª Clínica:</span> <span className="font-medium text-gray-700">{paciente.historia_clinica}</span></div>
               )}
-              <div><span className="text-gray-400">Inicio:</span> <span className="font-medium text-gray-700">{pp.fecha_inicio ? new Date(pp.fecha_inicio).toLocaleDateString('es-PE') : '—'}</span></div>
-              <div><span className="text-gray-400">Límite:</span> <span className="font-medium text-gray-700">{pp.fecha_limite ? new Date(pp.fecha_limite).toLocaleDateString('es-PE') : '—'}</span></div>
+              <div><span className="text-gray-400">Inicio:</span> <span className="font-medium text-gray-700">{formatearFecha(pp.fecha_inicio)}</span></div>
+              <div><span className="text-gray-400">Límite:</span> <span className="font-medium text-gray-700">{formatearFecha(pp.fecha_limite)}</span></div>
             </div>
 
             {pp.dx_principal && (
@@ -316,7 +317,7 @@ export default function PaqueteDetalle() {
                             {isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                           </td>
                           <td className="px-4 py-3 font-medium text-slate-700">
-                            {c.fecha_atencion ? new Date(c.fecha_atencion).toLocaleDateString('es-PE') : '—'}
+                            {formatearFecha(c.fecha_atencion)}
                           </td>
                           <td className="px-4 py-3">{c.nombre_profesional ?? '—'}</td>
                           <td className="px-4 py-3">{c.id_turno ?? '—'}</td>

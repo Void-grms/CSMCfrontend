@@ -7,6 +7,7 @@ import {
   activarProfesional,
   desactivarProfesional,
 } from '../../services/api';
+import { formatearFecha } from '../../utils/fecha';
 
 const ESTADOS = [
   { value: 'todos',    label: 'Todos' },
@@ -58,7 +59,7 @@ export default function AjustesPersonal() {
     return () => clearTimeout(id);
   }, [q]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const fmtFecha = (f) => f ? new Date(f).toLocaleDateString('es-PE') : '—';
+  const fmtFecha = formatearFecha;
 
   const cambiarEstado = async (p) => {
     const verbo  = p.activo ? 'dar de baja' : 'reactivar';

@@ -3,6 +3,7 @@ import { saveAs } from 'file-saver';
 import Badge from '../components/ui/Badge';
 import { obtenerPaquetesPaginados } from '../services/api';
 import { Eye, RefreshCw, X, ChevronDown, Loader2, Download, Search } from 'lucide-react';
+import { formatearFecha } from '../utils/fecha';
 
 const PAGE_SIZE = 50;
 
@@ -272,7 +273,7 @@ export default function Paquetes() {
     if (paquetes.length === 0) return;
     setDescargando(true);
     try {
-      const fmtFecha = (f) => f ? new Date(f).toLocaleDateString('es-PE') : '';
+      const fmtFecha = (f) => formatearFecha(f, '');
       const diasRestantes = (f) => {
         if (!f) return '';
         const d = Math.ceil((new Date(f) - new Date()) / 86400000);
@@ -501,11 +502,11 @@ export default function Paquetes() {
               <div className="grid grid-cols-3 gap-2 pt-2 border-t border-gray-100 text-[11px]">
                 <div>
                   <p className="text-gray-400 uppercase tracking-wide">Inicio</p>
-                  <p className="text-gray-700">{p.fecha_inicio ? new Date(p.fecha_inicio).toLocaleDateString('es-PE') : '—'}</p>
+                  <p className="text-gray-700">{formatearFecha(p.fecha_inicio)}</p>
                 </div>
                 <div>
                   <p className="text-gray-400 uppercase tracking-wide">Límite</p>
-                  <p className="text-gray-700">{p.fecha_limite ? new Date(p.fecha_limite).toLocaleDateString('es-PE') : '—'}</p>
+                  <p className="text-gray-700">{formatearFecha(p.fecha_limite)}</p>
                 </div>
                 <div>
                   <p className="text-gray-400 uppercase tracking-wide">Días</p>
@@ -569,10 +570,10 @@ export default function Paquetes() {
                     </td>
                     <td className="px-3 py-2"><BarraAvance porcentaje={p.porcentaje_avance} /></td>
                     <td className="px-3 py-2 text-gray-500 text-xs">
-                      {p.fecha_inicio ? new Date(p.fecha_inicio).toLocaleDateString('es-PE') : '—'}
+                      {formatearFecha(p.fecha_inicio)}
                     </td>
                     <td className="px-3 py-2 text-gray-500 text-xs">
-                      {p.fecha_limite ? new Date(p.fecha_limite).toLocaleDateString('es-PE') : '—'}
+                      {formatearFecha(p.fecha_limite)}
                     </td>
                     <td className="px-3 py-2"><DiasRestantes fechaLimite={p.fecha_limite} /></td>
                     <td className="px-3 py-2"><Badge color={colorEstado(p.estado)}>{p.estado}</Badge></td>

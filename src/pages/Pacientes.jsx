@@ -3,6 +3,7 @@ import Table from '../components/ui/Table';
 import Badge from '../components/ui/Badge';
 import { Search, Eye, AlertTriangle } from 'lucide-react';
 import { buscarPacientes, obtenerPaquetesPaciente } from '../services/api';
+import { formatearFecha } from '../utils/fecha';
 
 function colorEstado(estado) {
   if (estado === 'completado') return 'green';
@@ -66,10 +67,7 @@ export default function Pacientes() {
     {
       key: 'fecha_nacimiento',
       label: 'Nacimiento',
-      render: (row) =>
-        row.fecha_nacimiento
-          ? new Date(row.fecha_nacimiento).toLocaleDateString('es-PE')
-          : '—',
+      render: (row) => formatearFecha(row.fecha_nacimiento),
     },
     {
       key: 'acciones',
@@ -91,14 +89,12 @@ export default function Pacientes() {
     {
       key: 'fecha_inicio',
       label: 'Inicio',
-      render: (row) =>
-        row.fecha_inicio ? new Date(row.fecha_inicio).toLocaleDateString('es-PE') : '—',
+      render: (row) => formatearFecha(row.fecha_inicio),
     },
     {
       key: 'fecha_limite',
       label: 'Límite',
-      render: (row) =>
-        row.fecha_limite ? new Date(row.fecha_limite).toLocaleDateString('es-PE') : '—',
+      render: (row) => formatearFecha(row.fecha_limite),
     },
     {
       key: 'porcentaje_avance',
@@ -211,7 +207,7 @@ export default function Pacientes() {
                   <div>
                     <p className="text-outline uppercase tracking-wide">Nac.</p>
                     <p className="text-on-surface">
-                      {r.fecha_nacimiento ? new Date(r.fecha_nacimiento).toLocaleDateString('es-PE') : '—'}
+                      {formatearFecha(r.fecha_nacimiento)}
                     </p>
                   </div>
                 </div>
@@ -284,13 +280,13 @@ export default function Pacientes() {
                     <div>
                       <p className="text-outline uppercase tracking-wide">Inicio</p>
                       <p className="text-on-surface">
-                        {p.fecha_inicio ? new Date(p.fecha_inicio).toLocaleDateString('es-PE') : '—'}
+                        {formatearFecha(p.fecha_inicio)}
                       </p>
                     </div>
                     <div>
                       <p className="text-outline uppercase tracking-wide">Límite</p>
                       <p className="text-on-surface">
-                        {p.fecha_limite ? new Date(p.fecha_limite).toLocaleDateString('es-PE') : '—'}
+                        {formatearFecha(p.fecha_limite)}
                       </p>
                     </div>
                   </div>

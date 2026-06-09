@@ -14,6 +14,7 @@ import {
   Pill, Search, RefreshCw, Loader2, Eye, Settings2,
   AlertTriangle, Clock, CheckCircle2, Save, X,
 } from 'lucide-react';
+import { formatearFecha } from '../utils/fecha';
 
 // Metadatos de cada estado del semáforo.
 const ESTADO_META = {
@@ -30,7 +31,7 @@ const FILTROS_ESTADO = [
   { value: 'al_dia',  label: 'Al día' },
 ];
 
-const fmtFecha = (f) => (f ? new Date(f).toLocaleDateString('es-PE') : '—');
+const fmtFecha = formatearFecha;
 
 function DiasRestantes({ dias, estado }) {
   if (estado === 'inactivo' || dias == null) return <span className="text-gray-400">—</span>;

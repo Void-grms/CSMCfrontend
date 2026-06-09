@@ -5,6 +5,7 @@ import {
 } from 'lucide-react';
 import api from '../services/api';
 import { saveAs } from 'file-saver';
+import { formatearFecha } from '../utils/fecha';
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // Sub-componente: Autocomplete de profesional
@@ -330,7 +331,7 @@ function ExportModal({ reporte, totalDisponible, descargarTodo, onClose }) {
       const filas = datos.map(row =>
         activos.map(c => {
           let val = row[c.key];
-          if (c.key === 'fecha_atencion' && val) val = new Date(val).toLocaleDateString('es-PE');
+          if (c.key === 'fecha_atencion' && val) val = formatearFecha(val, '');
           if (val === null || val === undefined) val = '';
           return String(val).replace(/"/g, '""');
         })
@@ -517,8 +518,8 @@ export default function ReporteProfesionales() {
         r.total_atenciones ?? 0,
         r.total_citas ?? 0,
         r.total_pacientes ?? 0,
-        r.primera_atencion ? new Date(r.primera_atencion).toLocaleDateString('es-PE') : '',
-        r.ultima_atencion  ? new Date(r.ultima_atencion ).toLocaleDateString('es-PE') : '',
+        formatearFecha(r.primera_atencion, ''),
+        formatearFecha(r.ultima_atencion, ''),
       ]);
       if (filas.length === 0) {
         alert('No hay datos para el resumen con los filtros aplicados.');
@@ -673,7 +674,7 @@ export default function ReporteProfesionales() {
                   </div>
                   <div className="flex-1 min-w-0 space-y-1">
                     <div className="flex items-center justify-between gap-2">
-                      <span className="text-xs text-slate-500">{new Date(c.fecha_atencion).toLocaleDateString('es-PE')}</span>
+                      <span className="text-xs text-slate-500">{formatearFecha(c.fecha_atencion)}</span>
                       <span className="inline-flex items-center justify-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700 shrink-0">
                         {c.items.length} items
                       </span>
@@ -758,7 +759,7 @@ export default function ReporteProfesionales() {
                         <td className="px-4 py-3 text-slate-400">
                           {isOpen ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
                         </td>
-                        <td className="px-4 py-3 font-medium text-slate-700">{new Date(c.fecha_atencion).toLocaleDateString('es-PE')}</td>
+                        <td className="px-4 py-3 font-medium text-slate-700">{formatearFecha(c.fecha_atencion)}</td>
                         <td className="px-4 py-3">
                           <div className="font-medium text-slate-800">{c.nombre_profesional}</div>
                           <div className="text-[11px] text-slate-400">{c.profesion}</div>
