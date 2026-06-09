@@ -191,6 +191,31 @@ export const descargarReporteAtenciones = async (ids) => {
   window.URL.revokeObjectURL(url);
 };
 
+/** Verificación de codificación de usuarios nuevos de un periodo (datos para la tabla) */
+export const obtenerVerificacionCodificacion = (anio, mes) =>
+  api.get('/documentos/verificacion-codificacion', { params: { anio, mes } }).then((r) => r.data);
+
+/** Descarga el .docx de la verificación de codificación de un periodo */
+export const descargarVerificacionCodificacion = async (anio, mes) => {
+  const response = await api.get('/documentos/verificacion-codificacion/descargar', {
+    params: { anio, mes },
+    responseType: 'blob',
+  });
+
+  const disposition = response.headers['content-disposition'] || '';
+  const match = disposition.match(/filename="?([^"]+)"?/);
+  const filename = match ? match[1] : `Verificacion_Codificacion_${anio}${String(mes).padStart(2, '0')}.docx`;
+
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.URL.revokeObjectURL(url);
+};
+
 /* ──────────────────────────────────────────
    Reporte de Producción HIS
    ────────────────────────────────────────── */

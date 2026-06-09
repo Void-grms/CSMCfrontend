@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
-import { FileText, Search, Download, Loader2, AlertTriangle, CheckCircle2, X, ChevronLeft, FileSpreadsheet, ClipboardList } from 'lucide-react';
+import { FileText, Search, Download, Loader2, AlertTriangle, CheckCircle2, X, ChevronLeft, FileSpreadsheet, ClipboardList, ShieldCheck } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import api, { buscarPacienteDocumentos, generarDocumento, actualizarDomicilioPaciente, obtenerReporteHIS, exportarReporteHIS } from '../services/api';
 import FormReporteHISDiario from './FormReporteHISDiario';
 import FormReporteAtenciones from './FormReporteAtenciones';
+import FormVerificacionCodificacion from './FormVerificacionCodificacion';
 
 // ── Tipos de documentos disponibles (extensible para Fase 2) ─────────────────
 const TIPOS_DOCUMENTO = [
@@ -33,6 +34,13 @@ const TIPOS_DOCUMENTO = [
     nombre: 'Reporte de Atenciones (varios usuarios)',
     descripcion: 'Genera un .docx con el estado del paquete de varios pacientes a la vez: diagnóstico, fecha de inicio, número de atenciones y observación.',
     icon: ClipboardList,
+    requierePaciente: false,
+  },
+  {
+    id: 'verificacion-codificacion',
+    nombre: 'Verificación de Codificación',
+    descripcion: 'Audita los usuarios nuevos de un periodo: el diagnóstico debe ser definitivo (D) y debe existir el código PAI 99366 en la misma cita.',
+    icon: ShieldCheck,
     requierePaciente: false,
   },
   // Fase futura:
@@ -286,6 +294,10 @@ export default function Documentos() {
 
   if (tipoSeleccionado.id === 'reporte-atenciones') {
     return <FormReporteAtenciones volver={volver} tipoSeleccionado={tipoSeleccionado} />;
+  }
+
+  if (tipoSeleccionado.id === 'verificacion-codificacion') {
+    return <FormVerificacionCodificacion volver={volver} tipoSeleccionado={tipoSeleccionado} />;
   }
 
   if (tipoSeleccionado.id === 'reporte-his') {
