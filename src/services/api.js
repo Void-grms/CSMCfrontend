@@ -124,6 +124,18 @@ export const importarMaestros = (archivo) => {
 export const limpiarBaseDeDatos = (clave) =>
   api.delete('/database/limpiar', { data: { clave } }).then((r) => r.data);
 
+/** Periodos (meses) con datos en `atencion`, con sus conteos */
+export const obtenerPeriodosDatos = () =>
+  api.get('/database/periodos').then((r) => r.data);
+
+/**
+ * Borrar las atenciones de uno o varios meses (con clave de seguridad).
+ * @param {string} clave
+ * @param {Array<{anio:number, mes:number}>} periodos
+ */
+export const limpiarPorPeriodo = (clave, periodos) =>
+  api.delete('/database/limpiar-periodo', { data: { clave, periodos } }).then((r) => r.data);
+
 /** Historial de importaciones realizadas */
 export const obtenerHistorialCargas = () =>
   api.get('/historial-cargas').then((r) => r.data);
