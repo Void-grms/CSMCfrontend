@@ -109,8 +109,10 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
         <div className="flex items-start gap-2 rounded-lg bg-blue-50 p-3 text-sm text-blue-800">
           <ShieldCheck size={18} className="mt-0.5 shrink-0" />
           <span>
-            Revisa las citas de <strong>ingreso (condición N)</strong> del periodo. Cada usuario nuevo
-            debe tener su diagnóstico en <strong>definitivo (D)</strong> y el código <strong>PAI 99366</strong> en la misma cita.
+            Revisa las <strong>aperturas de paquete</strong> del periodo: la primera vez que un paciente
+            presenta un diagnóstico, en una cita <strong>Nuevo (N)</strong> o <strong>Reingreso (R)</strong>.
+            Esa cita debe tener el diagnóstico en <strong>Definitivo (D)</strong> y el código <strong>PAI 99366</strong>.
+            En las atenciones siguientes el Dx pasa a Repetido y ya no se exigen.
           </span>
         </div>
 
@@ -163,11 +165,11 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
       {/* Resumen */}
       {r && (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          <CardResumen label="Usuarios nuevos" valor={r.total} />
-          <CardResumen label="Correctos" valor={r.ok} color="text-green-600" />
+          <CardResumen label={`Aperturas (N:${r.nuevos} · R:${r.reingresos})`} valor={r.total} />
+          <CardResumen label="Correctas" valor={r.ok} color="text-green-600" />
           <CardResumen label="Con errores" valor={r.con_errores} color="text-red-600" />
           <CardResumen label="Dx no definitivo" valor={r.dx_no_definitivo} color="text-amber-600" />
-          <CardResumen label={`Sin 99366`} valor={r.sin_pai} color="text-amber-600" />
+          <CardResumen label="Sin 99366" valor={r.sin_pai} color="text-amber-600" />
         </div>
       )}
 
@@ -176,7 +178,7 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
         resultado.filas.length === 0 ? (
           <div className="rounded-xl border border-gray-200 bg-gray-50 py-10 text-center">
             <CheckCircle2 size={32} className="mx-auto mb-2 text-gray-400" />
-            <p className="font-medium text-gray-700">No hay usuarios nuevos en este periodo.</p>
+            <p className="font-medium text-gray-700">No hay aperturas de paquete en este periodo.</p>
           </div>
         ) : (
           <div className="overflow-x-auto rounded-xl border border-gray-100 bg-white shadow-sm">
@@ -186,6 +188,7 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
                   <th className="px-3 py-3">Fecha</th>
                   <th className="px-3 py-3">Nombres y apellidos</th>
                   <th className="px-3 py-3">DNI</th>
+                  <th className="px-3 py-3">Condición</th>
                   <th className="px-3 py-3">Dx (CIE-10)</th>
                   <th className="px-3 py-3">Tipo Dx</th>
                   <th className="px-3 py-3 text-center">PAI 99366</th>
@@ -200,6 +203,9 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
                       <td className="px-3 py-2 whitespace-nowrap text-gray-600">{formatearFecha(f.fecha_atencion)}</td>
                       <td className="px-3 py-2 font-medium text-gray-800">{f.nombre}</td>
                       <td className="px-3 py-2 font-mono text-xs text-gray-500">{f.dni}</td>
+                      <td className="px-3 py-2">
+                        <Badge color={f.cond === 'R' ? 'amber' : 'blue'}>{f.cond_label}</Badge>
+                      </td>
                       <td className="px-3 py-2 font-mono text-gray-700">{f.dx}</td>
                       <td className="px-3 py-2">
                         <Badge color={f.tipo_dx === 'D' ? 'green' : (f.tipo_dx ? 'red' : 'gray')}>

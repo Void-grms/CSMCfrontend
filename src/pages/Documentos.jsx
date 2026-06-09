@@ -39,7 +39,7 @@ const TIPOS_DOCUMENTO = [
   {
     id: 'verificacion-codificacion',
     nombre: 'Verificación de Codificación',
-    descripcion: 'Audita los usuarios nuevos de un periodo: el diagnóstico debe ser definitivo (D) y debe existir el código PAI 99366 en la misma cita.',
+    descripcion: 'Audita las aperturas de paquete (nuevos y reingresos) de un periodo: la primera vez que aparece el diagnóstico debe ser definitivo (D) y tener el código PAI 99366.',
     icon: ShieldCheck,
     requierePaciente: false,
   },
