@@ -188,6 +188,7 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
                   <th className="px-3 py-3">Fecha</th>
                   <th className="px-3 py-3">Nombres y apellidos</th>
                   <th className="px-3 py-3">DNI</th>
+                  <th className="px-3 py-3">Profesional</th>
                   <th className="px-3 py-3">Condición</th>
                   <th className="px-3 py-3">Dx (CIE-10)</th>
                   <th className="px-3 py-3">Tipo Dx</th>
@@ -203,6 +204,7 @@ export default function FormVerificacionCodificacion({ volver, tipoSeleccionado 
                       <td className="px-3 py-2 whitespace-nowrap text-gray-600">{formatearFecha(f.fecha_atencion)}</td>
                       <td className="px-3 py-2 font-medium text-gray-800">{f.nombre}</td>
                       <td className="px-3 py-2 font-mono text-xs text-gray-500">{f.dni}</td>
+                      <td className="px-3 py-2 text-gray-700">{f.profesional}</td>
                       <td className="px-3 py-2">
                         <Badge color={f.cond === 'R' ? 'amber' : 'blue'}>{f.cond_label}</Badge>
                       </td>
