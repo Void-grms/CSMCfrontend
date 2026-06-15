@@ -8,7 +8,7 @@ import {
 } from '../services/api';
 import {
   Upload, FileText, CheckCircle, AlertTriangle, Loader2,
-  Calendar, Trash2, RefreshCw,
+  Calendar, Trash2, RefreshCw, ChevronDown, ChevronUp,
 } from 'lucide-react';
 
 const MESES = [
@@ -25,11 +25,13 @@ function SeccionImportar({ titulo, descripcion, onImportar }) {
   const [cargando, setCargando] = useState(false);
   const [resultado, setResultado] = useState(null);
   const [error, setError] = useState(null);
+  const [verErrores, setVerErrores] = useState(false);
 
   const manejarArchivo = (e) => {
     setArchivo(e.target.files[0] ?? null);
     setResultado(null);
     setError(null);
+    setVerErrores(false);
   };
 
   const enviar = async () => {
@@ -37,6 +39,7 @@ function SeccionImportar({ titulo, descripcion, onImportar }) {
     setCargando(true);
     setResultado(null);
     setError(null);
+    setVerErrores(false);
 
     try {
       const data = await onImportar(archivo);
@@ -104,11 +107,66 @@ function SeccionImportar({ titulo, descripcion, onImportar }) {
             <span className="font-semibold text-sm">Importación exitosa</span>
           </div>
           <ul className="space-y-1 text-sm text-green-800">
-            {resultado.insertadas != null && <li>Insertados: {resultado.insertadas}</li>}
-            {resultado.actualizadas != null && <li>Actualizados: {resultado.actualizadas}</li>}
-            {resultado.errores != null && <li>Errores: {resultado.errores}</li>}
+            {resultado.insertados != null && <li>Insertados: {resultado.insertados}</li>}
+            {resultado.actualizados != null && <li>Actualizados: {resultado.actualizados}</li>}
+            {resultado.descartadas != null && <li>Descartados (validación): {resultado.descartadas}</li>}
+            {resultado.errores != null && <li>Errores (base de datos): {resultado.errores}</li>}
             {resultado.total != null && <li>Total procesados: {resultado.total}</li>}
           </ul>
+
+          {/* Detalle de errores: lista desplegable */}
+          {Array.isArray(resultado.detalles_errores) && resultado.detalles_errores.length > 0 && (
+            <div className="mt-3 border-t border-green-200 pt-3">
+              <button
+                type="button"
+                onClick={() => setVerErrores((v) => !v)}
+                className="inline-flex items-center gap-1.5 text-sm font-medium text-amber-700 hover:text-amber-800"
+              >
+                {verErrores ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+                Ver detalle de errores ({resultado.detalles_errores.length})
+              </button>
+
+              {verErrores && (
+                <div className="mt-2 max-h-72 overflow-auto rounded-lg border border-amber-200 bg-white">
+                  <table className="w-full text-left text-xs">
+                    <thead className="sticky top-0 bg-amber-50 text-amber-800">
+                      <tr>
+                        <th className="px-3 py-2 font-semibold">Tipo</th>
+                        <th className="px-3 py-2 font-semibold">Fila / id_cita</th>
+                        <th className="px-3 py-2 font-semibold">Motivo / mensaje</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-100 text-gray-700">
+                      {resultado.detalles_errores.map((e, i) => (
+                        <tr key={i} className="align-top">
+                          <td className="whitespace-nowrap px-3 py-1.5">
+                            <span
+                              className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${
+                                e.tipo === 'bd'
+                                  ? 'bg-red-100 text-red-700'
+                                  : 'bg-amber-100 text-amber-700'
+                              }`}
+                            >
+                              {e.tipo === 'bd' ? 'Base de datos' : 'Validación'}
+                            </span>
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-1.5 text-gray-600">
+                            {e.fila != null && <span>Fila {e.fila}</span>}
+                            {e.fila != null && e.id_cita ? ' · ' : ''}
+                            {e.id_cita && <span>{e.id_cita}</span>}
+                            {e.id_correlativo != null && (
+                              <span className="text-gray-400"> #{e.id_correlativo}</span>
+                            )}
+                          </td>
+                          <td className="px-3 py-1.5">{e.motivo ?? e.mensaje}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
 
