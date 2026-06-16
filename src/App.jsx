@@ -7,6 +7,8 @@ import Sidebar from './components/layout/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Paquetes from './pages/Paquetes';
 import PaqueteDetalle from './pages/PaqueteDetalle';
+import Salvavidas from './pages/Salvavidas';
+import SalvavidasPaquete from './pages/SalvavidasPaquete';
 import Pacientes from './pages/Pacientes';
 import Farmacia from './pages/Farmacia';
 import FarmaciaPacienteDetalle from './pages/FarmaciaPacienteDetalle';
@@ -68,6 +70,8 @@ function MainLayout() {
             <Route path="/dashboard"     element={<Dashboard />} />
             <Route path="/paquetes"      element={<Paquetes />} />
             <Route path="/paquetes/:id"  element={<PaqueteDetalle />} />
+            <Route path="/salvavidas"            element={<Salvavidas />} />
+            <Route path="/salvavidas/:idPaquete" element={<SalvavidasPaquete />} />
             <Route path="/pacientes"     element={<Pacientes />} />
             <Route path="/farmacia"             element={<Farmacia />} />
             <Route path="/farmacia/:idPaciente" element={<FarmaciaPacienteDetalle />} />

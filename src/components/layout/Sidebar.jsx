@@ -10,7 +10,8 @@ import {
   UserCircle,
   FileText,
   BarChart2,
-  Settings
+  Settings,
+  LifeBuoy
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import logoRenacer from '../../assets/LogoRenacer.png';
@@ -19,6 +20,7 @@ import logoRenacer from '../../assets/LogoRenacer.png';
 const enlaces = [
   { to: '/dashboard', label: 'Dashboard',      icon: LayoutDashboard },
   { to: '/paquetes',  label: 'Paquetes',       icon: Package },
+  { to: '/salvavidas', label: 'Salvavidas',    icon: LifeBuoy, soloAdmin: true },
   { to: '/pacientes', label: 'Pacientes',      icon: Users },
   { to: '/farmacia',  label: 'Farmacia',       icon: Pill },
   { to: '/importar',  label: 'Importar datos', icon: FolderUp },

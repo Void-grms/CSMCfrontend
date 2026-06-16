@@ -400,4 +400,20 @@ export const editarIntervaloPaciente = (id, payload) =>
 export const guardarNotaDispensacion = (idCita, idCorrelativo, payload) =>
   api.put(`/farmacia/dispensaciones/${idCita}/${idCorrelativo}/nota`, payload).then((r) => r.data);
 
+/* ──────────────────────────────────────────
+   Salvavidas — rescate de paquetes (admin)
+   ────────────────────────────────────────── */
+
+/** [admin] Botones: un paquete por fila con conteos de salvables y corregibles */
+export const obtenerSalvavidasPaquetes = (anio, umbral = 2) =>
+  api.get('/salvavidas/paquetes', { params: { anio, umbral } }).then((r) => r.data);
+
+/** [admin] Paquetes abiertos cercanos a completarse de un paquete */
+export const obtenerSalvavidasSalvables = (idPaquete, anio, umbral = 2) =>
+  api.get(`/salvavidas/${idPaquete}/salvables`, { params: { anio, umbral } }).then((r) => r.data);
+
+/** [admin] Paquetes vencidos recuperables (con atención mal codificada) */
+export const obtenerSalvavidasCorregibles = (idPaquete, anio) =>
+  api.get(`/salvavidas/${idPaquete}/corregibles`, { params: { anio } }).then((r) => r.data);
+
 export default api;
