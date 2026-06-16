@@ -78,7 +78,7 @@ export default function AjustesPaqueteDetalle() {
               </div>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
-              <Stat label="Plazo" valor={`${mostrando.plazo_meses} meses`} />
+              <Stat label="Plazo" valor={`${mostrando.plazo_dias} días`} />
               <Stat label="Actividad" valor={mostrando.id_actividad || '—'} />
               <Stat label="Edad mínima" valor={mostrando.edad_minima ?? '—'} />
               <Stat label="Edad máxima" valor={mostrando.edad_maxima ?? '—'} />

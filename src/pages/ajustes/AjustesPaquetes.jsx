@@ -152,7 +152,7 @@ export default function AjustesPaquetes() {
               <div className="grid grid-cols-2 gap-2 text-xs pt-2 border-t border-outline-variant/15">
                 <div>
                   <p className="text-[10px] uppercase text-outline tracking-wide">Plazo</p>
-                  <p className="font-semibold text-on-surface">{p.plazo_meses} meses</p>
+                  <p className="font-semibold text-on-surface">{p.plazo_dias} días</p>
                 </div>
                 <div>
                   <p className="text-[10px] uppercase text-outline tracking-wide">Edades</p>
@@ -243,7 +243,7 @@ export default function AjustesPaquetes() {
                     <div className="font-semibold text-on-surface break-words">{p.nombre}</div>
                     <div className="text-[11px] text-outline font-mono break-all">{p.id_paquete}</div>
                   </td>
-                  <td className="px-3 py-3 text-center">{p.plazo_meses}m</td>
+                  <td className="px-3 py-3 text-center">{p.plazo_dias}d</td>
                   <td className="px-3 py-3 text-center text-xs">
                     {p.edad_minima != null && p.edad_maxima != null && `${p.edad_minima}–${p.edad_maxima}`}
                     {p.edad_minima != null && p.edad_maxima == null && `≥${p.edad_minima}`}

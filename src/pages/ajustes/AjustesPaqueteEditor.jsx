@@ -19,7 +19,7 @@ function paqueteVacio() {
     id_paquete: '',
     nombre: '',
     codigo_paquete: '',
-    plazo_meses: 8,
+    plazo_dias: 269,
     id_actividad: '',
     edad_minima: '',
     edad_maxima: '',
@@ -77,7 +77,7 @@ export default function AjustesPaqueteEditor({ modo }) {
             id_paquete:     data.id_paquete,
             nombre:         data.nombre || '',
             codigo_paquete: data.codigo_paquete || '',
-            plazo_meses:    data.plazo_meses ?? 8,
+            plazo_dias:     data.plazo_dias ?? 269,
             id_actividad:   data.id_actividad || '',
             edad_minima:    data.edad_minima ?? '',
             edad_maxima:    data.edad_maxima ?? '',
@@ -196,7 +196,7 @@ export default function AjustesPaqueteEditor({ modo }) {
       errs.push('id_paquete debe usar mayúsculas/dígitos/guión bajo (2-50 chars).');
     }
     if (!form.nombre.trim()) errs.push('Nombre requerido.');
-    if (!Number.isInteger(Number(form.plazo_meses)) || form.plazo_meses < 1) errs.push('Plazo (meses) debe ser entero ≥ 1.');
+    if (!Number.isInteger(Number(form.plazo_dias)) || form.plazo_dias < 1) errs.push('Plazo (días) debe ser entero ≥ 1.');
     if (form.edad_minima !== '' && form.edad_maxima !== '' && Number(form.edad_minima) > Number(form.edad_maxima)) {
       errs.push('edad_minima debe ser ≤ edad_maxima.');
     }
@@ -251,7 +251,7 @@ export default function AjustesPaqueteEditor({ modo }) {
         id_paquete:     form.id_paquete,
         nombre:         form.nombre,
         codigo_paquete: form.codigo_paquete,
-        plazo_meses:    Number(form.plazo_meses),
+        plazo_dias:     Number(form.plazo_dias),
         id_actividad:   form.id_actividad,
         edad_minima:    form.edad_minima === '' ? null : Number(form.edad_minima),
         edad_maxima:    form.edad_maxima === '' ? null : Number(form.edad_maxima),
@@ -343,11 +343,11 @@ export default function AjustesPaqueteEditor({ modo }) {
               placeholder="Tratamiento ambulatorio de personas con..."
             />
           </FormCampo>
-          <FormCampo label="Plazo (meses)">
+          <FormCampo label="Plazo (días)">
             <input
-              type="number" min="1" max="60"
-              value={form.plazo_meses}
-              onChange={(e) => setCampo('plazo_meses', e.target.value)}
+              type="number" min="1" max="1000"
+              value={form.plazo_dias}
+              onChange={(e) => setCampo('plazo_dias', e.target.value)}
               className="w-full px-3 py-2 rounded-lg border border-outline-variant/30 bg-surface-bright text-sm"
             />
           </FormCampo>
