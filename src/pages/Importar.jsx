@@ -5,6 +5,7 @@ import {
   limpiarBaseDeDatos,
   obtenerPeriodosDatos,
   limpiarPorPeriodo,
+  recalcularPaquetes,
 } from '../services/api';
 import {
   Upload, FileText, CheckCircle, AlertTriangle, Loader2,
@@ -370,6 +371,81 @@ function BorrarPorPeriodo() {
   );
 }
 
+/**
+ * Recalcula todos los paquetes a partir de las atenciones ya cargadas y el
+ * catálogo actual. No borra atenciones ni requiere recargar CSV. Operación segura
+ * y repetible: solo pide confirmación.
+ */
+function RecalcularPaquetes() {
+  const [recalculando, setRecalculando] = useState(false);
+  const [resultado, setResultado] = useState(null); // contadores
+  const [mensaje, setMensaje] = useState(null);      // { tipo, texto }
+
+  const handleRecalcular = async () => {
+    if (!window.confirm(
+      '¿Recalcular todos los paquetes con las atenciones ya cargadas?\n\n' +
+      'Reconstruye los paquetes aplicando el catálogo actual. No borra atenciones ' +
+      'ni necesitas volver a subir los CSV. Puede tardar unos minutos.'
+    )) return;
+
+    setRecalculando(true);
+    setMensaje(null);
+    setResultado(null);
+    try {
+      const resp = await recalcularPaquetes();
+      setResultado(resp.contadores ?? null);
+      if (resp.paquetes_error) {
+        setMensaje({ tipo: 'error', texto: `Aviso: el recálculo falló: ${resp.paquetes_error}` });
+      } else {
+        setMensaje({ tipo: 'exito', texto: resp.mensaje || 'Paquetes recalculados correctamente.' });
+      }
+    } catch (err) {
+      setMensaje({ tipo: 'error', texto: err.response?.data?.error ?? err.message ?? 'Error al recalcular' });
+    } finally {
+      setRecalculando(false);
+    }
+  };
+
+  return (
+    <div className="rounded-xl border border-blue-200 bg-blue-50 p-6 shadow-sm">
+      <h3 className="flex items-center gap-2 text-base font-bold text-blue-800">
+        <RefreshCw size={20} />
+        Recalcular paquetes
+      </h3>
+      <p className="mb-4 mt-1 text-sm text-blue-700">
+        Vuelve a calcular todos los paquetes con las atenciones ya cargadas y el catálogo
+        actual. Úsalo tras actualizar el catálogo, sin borrar ni recargar los CSV.
+      </p>
+
+      <button
+        type="button"
+        onClick={handleRecalcular}
+        disabled={recalculando}
+        className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:opacity-50"
+      >
+        {recalculando ? <Loader2 size={16} className="animate-spin" /> : <RefreshCw size={16} />}
+        {recalculando ? 'Recalculando…' : 'Recalcular paquetes'}
+      </button>
+
+      {resultado && (
+        <ul className="mt-4 space-y-1 rounded-lg bg-white p-4 text-sm text-blue-900 ring-1 ring-blue-100">
+          <li>Paquetes abiertos revisados: {resultado.paquetesAbiertosEncontrados}</li>
+          <li>Nuevos paquetes abiertos: {resultado.nuevosAbiertos}</li>
+          <li>Pasaron a completado: {resultado.pasaronCompletado}</li>
+          <li>Pasaron a vencido: {resultado.pasaronVencido}</li>
+          <li>Errores individuales: {resultado.errores}</li>
+        </ul>
+      )}
+
+      {mensaje && (
+        <div className={`mt-3 text-sm font-medium ${mensaje.tipo === 'exito' ? 'text-green-700' : 'text-red-700'}`}>
+          {mensaje.texto}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Importar() {
   const [clave, setClave] = useState('');
   const [limpiando, setLimpiando] = useState(false);
@@ -413,6 +489,9 @@ export default function Importar() {
         descripcion="Archivo CSV con datos maestros (personal, registrador, paciente)."
         onImportar={importarMaestros}
       />
+
+      {/* Recalcular paquetes (sin borrar atenciones) */}
+      <RecalcularPaquetes />
 
       {/* Borrado selectivo por periodo (mes) */}
       <BorrarPorPeriodo />

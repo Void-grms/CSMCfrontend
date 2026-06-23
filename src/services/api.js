@@ -136,6 +136,10 @@ export const obtenerPeriodosDatos = () =>
 export const limpiarPorPeriodo = (clave, periodos) =>
   api.delete('/database/limpiar-periodo', { data: { clave, periodos } }).then((r) => r.data);
 
+/** Recalcula todos los paquetes con las atenciones ya cargadas (reconstruye desde cero) */
+export const recalcularPaquetes = () =>
+  api.post('/database/recalcular').then((r) => r.data);
+
 /** Historial de importaciones realizadas */
 export const obtenerHistorialCargas = () =>
   api.get('/historial-cargas').then((r) => r.data);
