@@ -55,7 +55,7 @@ export default function DashboardAcpDetalle() {
               Acompañamientos Clínicos Psicosociales
             </h1>
             <p className="mt-1 text-sm text-gray-500">
-              Atenciones APP100 que suman a la meta en {periodo}.
+              Atenciones APP100 de coordinadores que suman a la meta en {periodo}.
             </p>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function DashboardAcpDetalle() {
       </div>
 
       <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
-        Cada fila corresponde a una cita válida con C7004, tipo D, LAB 1 = ACP, sesión del 1 al 10 y cantidad de personal mayor que cero. La supervisión C7002 se muestra como información complementaria, pero no incrementa el total.
+        Cada fila corresponde a una cita válida con C7004, tipo D, LAB 1 = ACP, sesión del 1 al 10 y cantidad de personal mayor que cero. Además, debe tener C7002 tipo D con el EESS asignado del 1 al 4 en el segundo LAB; esta condición identifica al coordinador. Los registros de apoyo sin ese segundo LAB no suman a la meta.
       </div>
 
       {error && (
@@ -106,7 +106,7 @@ export default function DashboardAcpDetalle() {
                   <Dato label="Sesión" valor={r.numero_sesion} />
                   <Dato label="Personal que recibió ACP" valor={r.cantidad_personal} />
                   <Dato label="Profesión (C7002)" valor={r.profesion_actividad} />
-                  <Dato label="EESS asignado" valor={r.eess_numero ? `EESS ${r.eess_numero}` : null} />
+                  <Dato label="EESS coordinado" valor={r.eess_numero ? `EESS ${r.eess_numero}` : null} />
                 </div>
               </article>
             ))}
