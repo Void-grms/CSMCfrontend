@@ -117,7 +117,7 @@ export default function Dashboard() {
           </span>
         </div>
 
-        <DashboardProgressTable paquetes={paquetes} />
+        <DashboardProgressTable paquetes={paquetes} anio={anio} />
       </div>
 
     </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { saveAs } from 'file-saver';
 import Badge from '../components/ui/Badge';
 import { obtenerPaquetesPaginados } from '../services/api';
@@ -6,6 +7,7 @@ import { Eye, RefreshCw, X, ChevronDown, Loader2, Download, Search } from 'lucid
 import { formatearFecha } from '../utils/fecha';
 
 const PAGE_SIZE = 50;
+const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
 function colorEstado(estado) {
   if (estado === 'completado') return 'green';
@@ -163,6 +165,7 @@ function MultiSelectCombobox({ opciones, seleccionados, onChange, placeholder, p
 }
 
 export default function Paquetes() {
+  const [searchParams] = useSearchParams();
 
   // ── Datos y paginación ───────────────────────────────
   const [paquetes, setPaquetes]             = useState([]);
@@ -173,13 +176,17 @@ export default function Paquetes() {
   const [offset, setOffset]                 = useState(0);
 
   // ── Filtros ──────────────────────────────────────────
-  const [filtroEstado, setFiltroEstado]     = useState('abierto');
-  const [tiposSeleccionados, setTiposSeleccionados] = useState([]); // string[]
+  const [filtroEstado, setFiltroEstado]     = useState(() => searchParams.get('estado') || 'abierto');
+  const [tiposSeleccionados, setTiposSeleccionados] = useState(() =>
+    (searchParams.get('tipo') || '').split(',').map(id => id.trim()).filter(Boolean)
+  ); // string[]
   const [dxsSeleccionados, setDxsSeleccionados]     = useState([]); // string[]
   const [campofecha, setCampoFecha]         = useState('fecha_inicio');
   const [fechaDesde, setFechaDesde]         = useState('');
   const [fechaHasta, setFechaHasta]         = useState('');
   const [ordenDias, setOrdenDias]           = useState('ninguno');
+  const [dashboardAnio, setDashboardAnio]   = useState(() => searchParams.get('anio') || '');
+  const [dashboardMes, setDashboardMes]     = useState(() => searchParams.get('mes') || '');
 
   // ── Descarga ─────────────────────────────────────────
   const [descargando, setDescargando]       = useState(false);
@@ -200,8 +207,10 @@ export default function Paquetes() {
     if (fechaDesde) { params.campoFecha = campofecha; params.fechaDesde = fechaDesde; }
     if (fechaHasta) { params.campoFecha = campofecha; params.fechaHasta = fechaHasta; }
     if (ordenDias !== 'ninguno') params.ordenDias = ordenDias;
+    if (dashboardAnio) params.anio = dashboardAnio;
+    if (dashboardMes) params.mes = dashboardMes;
     return params;
-  }, [filtroEstado, tiposSeleccionados, dxsSeleccionados, campofecha, fechaDesde, fechaHasta, ordenDias]);
+  }, [filtroEstado, tiposSeleccionados, dxsSeleccionados, campofecha, fechaDesde, fechaHasta, ordenDias, dashboardAnio, dashboardMes]);
 
   // ── Cargar primer bloque (reset) ─────────────────────
   const cargar = useCallback(async () => {
@@ -237,7 +246,7 @@ export default function Paquetes() {
   }, [offset, buildParams]);
 
   // Cargar al montar y cuando cambian los filtros
-  useEffect(() => { cargar(); }, [filtroEstado, tiposSeleccionados, dxsSeleccionados, campofecha, fechaDesde, fechaHasta, ordenDias]);
+  useEffect(() => { cargar(); }, [cargar]);
 
   // Cargar tipos de paquete y diagnósticos una sola vez (catálogos derivados)
   useEffect(() => {
@@ -260,12 +269,14 @@ export default function Paquetes() {
 
   const hayFiltrosActivos =
     filtroEstado !== 'abierto' || tiposSeleccionados.length > 0 || dxsSeleccionados.length > 0 ||
-    fechaDesde !== '' || fechaHasta !== '' || ordenDias !== 'ninguno';
+    fechaDesde !== '' || fechaHasta !== '' || ordenDias !== 'ninguno' ||
+    dashboardAnio !== '' || dashboardMes !== '';
 
   const limpiarFiltros = () => {
     setFiltroEstado('abierto'); setTiposSeleccionados([]); setDxsSeleccionados([]);
     setCampoFecha('fecha_inicio'); setFechaDesde('');
     setFechaHasta(''); setOrdenDias('ninguno');
+    setDashboardAnio(''); setDashboardMes('');
   };
 
   // ── Descarga (CSV con BOM, UTF-8) ────────────────────
@@ -377,6 +388,25 @@ export default function Paquetes() {
           </button>
         </div>
       </div>
+
+      {(dashboardAnio || dashboardMes) && (
+        <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm text-blue-800">
+          <span>
+            Mostrando los registros que conforman el valor del dashboard
+            {dashboardMes && Number(dashboardMes) >= 1 && Number(dashboardMes) <= 12
+              ? ` en ${MESES[Number(dashboardMes) - 1]}`
+              : ''}
+            {dashboardAnio && dashboardAnio !== 'todos' ? ` de ${dashboardAnio}` : ''}.
+          </span>
+          <button
+            type="button"
+            onClick={() => window.history.back()}
+            className="font-medium underline underline-offset-2 hover:text-blue-950"
+          >
+            Volver al dashboard
+          </button>
+        </div>
+      )}
 
       {/* Panel de filtros */}
       <div className="bg-gray-50 border border-gray-200 rounded-lg p-3 sm:p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">

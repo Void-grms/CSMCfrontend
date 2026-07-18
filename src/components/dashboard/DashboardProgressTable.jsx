@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const mnames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
@@ -11,7 +12,24 @@ const ordenActividades = [
   '5005197'
 ];
 
-export default function DashboardProgressTable({ paquetes }) {
+export default function DashboardProgressTable({ paquetes, anio }) {
+  const navigate = useNavigate();
+
+  const abrirDetalle = (paquete, mes) => {
+    const params = new URLSearchParams();
+    params.set('anio', anio || 'todos');
+    if (mes) params.set('mes', String(mes));
+
+    if (paquete.es_acp || paquete.id_paquete === 'ACP_001') {
+      navigate(`/dashboard/acp?${params.toString()}`);
+      return;
+    }
+
+    params.set('estado', 'todos');
+    params.set('tipo', paquete.id_paquete);
+    params.set('origen', 'dashboard');
+    navigate(`/paquetes?${params.toString()}`);
+  };
   const getBadgeColor = (porcentaje) => {
     if (porcentaje >= 80) return 'bg-[#dcfce7] text-[#166534] ring-[#166534]/30';
     if (porcentaje >= 50) return 'bg-secondary-container/30 text-on-secondary-container ring-secondary/30';
@@ -124,12 +142,34 @@ export default function DashboardProgressTable({ paquetes }) {
                         
                         {numMeses.map((val, i) => (
                           <td key={i} className="px-3 py-3 text-center border-l border-outline-variant/8 text-on-surface text-[11px]">
-                            {val === 0 ? <span className="text-outline-variant">-</span> : val}
+                            {Number(val) === 0 ? (
+                              <span className="text-outline-variant">-</span>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() => abrirDetalle(p, i + 1)}
+                                className="min-w-7 rounded-md px-2 py-1 font-bold text-primary underline decoration-primary/30 underline-offset-2 hover:bg-primary/10 hover:decoration-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                                title={`Ver ${val} registro${Number(val) === 1 ? '' : 's'} de ${mnames[i]}`}
+                              >
+                                {val}
+                              </button>
+                            )}
                           </td>
                         ))}
 
                         <td className="px-3 py-3 text-center border-l border-outline-variant/10 font-bold text-on-surface bg-surface-container/30 text-xs">
-                          {total}
+                          {Number(total) === 0 ? (
+                            <span className="text-outline-variant">-</span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => abrirDetalle(p)}
+                              className="min-w-8 rounded-md px-2 py-1 font-bold text-primary underline decoration-primary/30 underline-offset-2 hover:bg-primary/10 hover:decoration-primary focus:outline-none focus:ring-2 focus:ring-primary/30"
+                              title={`Ver los ${total} registros acumulados`}
+                            >
+                              {total}
+                            </button>
+                          )}
                         </td>
                         <td className="px-3 py-3 text-center border-l border-outline-variant/10">
                           <span className={"px-2 py-0.5 rounded-md text-[10px] font-bold tracking-wide ring-1 ring-inset inline-block min-w-[40px] " + getBadgeColor(porcentaje)}>
