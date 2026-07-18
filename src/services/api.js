@@ -45,6 +45,10 @@ export const loginApi = (username, password) =>
 export const obtenerDashboard = (anio) => 
   api.get('/dashboard', { params: { anio } }).then((r) => r.data);
 
+/** Sesiones ACP que respaldan una celda del dashboard */
+export const obtenerDetalleAcpDashboard = (anio, mes) =>
+  api.get('/dashboard/acp-detalle', { params: { anio, mes } }).then((r) => r.data);
+
 /* ──────────────────────────────────────────
    Paquetes
    ────────────────────────────────────────── */

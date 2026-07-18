@@ -5,6 +5,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/layout/ProtectedRoute';
 import Sidebar from './components/layout/Sidebar';
 import Dashboard from './pages/Dashboard';
+import DashboardAcpDetalle from './pages/DashboardAcpDetalle';
 import Paquetes from './pages/Paquetes';
 import PaqueteDetalle from './pages/PaqueteDetalle';
 import Salvavidas from './pages/Salvavidas';
@@ -68,6 +69,7 @@ function MainLayout() {
         <main className="flex-1 p-3 sm:p-6 pt-3 sm:pt-4 w-full min-w-0 max-w-full overflow-x-hidden">
           <Routes>
             <Route path="/dashboard"     element={<Dashboard />} />
+            <Route path="/dashboard/acp" element={<DashboardAcpDetalle />} />
             <Route path="/paquetes"      element={<Paquetes />} />
             <Route path="/paquetes/:id"  element={<PaqueteDetalle />} />
             <Route path="/salvavidas"            element={<Salvavidas />} />
